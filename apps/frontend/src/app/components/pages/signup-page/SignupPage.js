@@ -1,8 +1,8 @@
 import React from 'react';
 import './signup.scss'; 
-import SignupForm from '../../blocks/form/signup-form';
+import SignupForm from './SignupForm';
 
-const Signup = () => {
+const SignupPage = () => {
   return (
     <div>
       {/* <h2 className={styles.myBlock}>Signup</h2> */}
@@ -11,4 +11,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default SignupPage;

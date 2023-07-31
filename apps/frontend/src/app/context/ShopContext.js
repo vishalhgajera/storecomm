@@ -1,26 +1,24 @@
 import React, { createContext, useContext, useState } from 'react';
 import axios from 'axios';
 
-const ProductContext = createContext();
+const ShopContext = createContext();
 
-export const useProduct = () => useContext(ProductContext);
+export const useShop = () => useContext(ShopContext);
 
-const ProductProvider = ({ children }) => {
+const ShopProvider = ({ children }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [items, setItems] = useState([]);
-  const [products, setProducts] = useState([]);
-  let url = '';
+  const [products, setproducts] = useState([]);
+  const url = `http://localhost:3333/product/all`;
   
-  const fetchProduct = (product) => {
-    url = `http://localhost:3333/product/${product}`;
+  const fetchShop = () => {
     axios
     .get(url)
     .then(function (response) {
       // handle success
-      console.log(response.data);
       setIsLoaded(true);
       setItems(response.data.product);
-      setProducts(response.data.product);
+      setproducts(response.data.product.slice(0, 20));
     })
     .catch(function (error) {
       // handle error
@@ -32,23 +30,23 @@ const ProductProvider = ({ children }) => {
 
   };
 
-const setFilterProduct = (value) => {
+const setFilterShop = (value) => {
     const newItems = items.filter(e =>(e.category.name === value));
     // console.log(newItems.map(e=>e.category));
-    setProducts(newItems.slice(0, 20))
+    setproducts(newItems.slice(0, 20))
 }
 const setFullList = () => {
-  setProducts(items.slice(0, 20))
+  setproducts(items.slice(0, 20))
 }
 
   return (
-    <ProductContext.Provider value={{ products, setFilterProduct,setFullList, isLoaded, fetchProduct }}>
+    <ShopContext.Provider value={{ products, setFilterShop,setFullList, isLoaded, fetchShop }}>
       {children}
-    </ProductContext.Provider>
+    </ShopContext.Provider>
   );
 };
 
-export default ProductProvider;
+export default ShopProvider;
 
 
 

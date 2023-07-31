@@ -1,49 +1,35 @@
-import { Route, Routes } from 'react-router-dom';
-import Login from './components/pages/login-page/login';
-import Signup from './components/pages/signup-page/signup';
-import LoginNavbar from './components/blocks/navbar/login-navbar';
-import HomePage from './components/pages/home-page/home-page';
-import { useAuth } from '../app/context/AuthContext'
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { indigo } from '@mui/material/colors';
-import Navbar from './components/blocks/navbar/app-navbar';
+import {
+  experimental_extendTheme as materialExtendTheme,
+  Experimental_CssVarsProvider as MaterialCssVarsProvider,
+  THEME_ID as MATERIAL_THEME_ID,
+} from '@mui/material/styles';
+import { useAuth } from '../app/context/AuthContext';
+import LoginNavbar from './components/blocks/navbar/LoginNavbar';
+import Navbar from './components/blocks/navbar/AppNavbar';
+import { CssVarsProvider as JoyCssVarsProvider } from '@mui/joy/styles';
+import AppRoutes from './appRoutes';
+import Sheet from '@mui/joy/Sheet';
 
-
-const theme = createTheme({
-  palette: {
-    primary: indigo,
-    secondary: {
-      main: '#e91e63',
-    },
-  },
-});
+const materialTheme = materialExtendTheme();
 
 export function App() {
-  const { isLoggedIn } = useAuth(); 
+  const { accessToken } = useAuth();
 
-  console.log(isLoggedIn);
   return (
-    <div>
-      {/* <NxWelcome title="store-frontend" /> */}
-
-
-    
-      <ThemeProvider theme={theme}>
-        {' '}
-        <div>
-          {/* <Navbar/> */}
-          {isLoggedIn?<Navbar />:<LoginNavbar />}
-          {/* <LoginNavbar /> */}
-
-          <Routes>
-            <Route path={"/" } element={<HomePage />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-          </Routes>
-          {/* END: routes */}
-        </div>
-      </ThemeProvider>
-    </div>
+    <MaterialCssVarsProvider theme={{ [MATERIAL_THEME_ID]: materialTheme }}>
+        <JoyCssVarsProvider>
+        <Sheet sx={{minHeight:'100vh'}}>
+          {accessToken?.token ? (
+            <Navbar user={accessToken?.user} />
+          ) : (
+            <LoginNavbar />
+          )}
+           <Sheet sx={{height:'100%',bgcolor:'#ffffff2b',py:5}}>
+          <AppRoutes />
+          </Sheet>
+        </Sheet>
+        </JoyCssVarsProvider>
+      </MaterialCssVarsProvider>
   );
 }
 

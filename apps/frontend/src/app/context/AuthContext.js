@@ -3,35 +3,26 @@ const AuthContext = createContext();
 export const useAuth = () => useContext(AuthContext);
 
 const AuthProvider = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [user , setUser] = useState({});
+  const [accessToken , setAccessToken] = useState({});
 
   const checkLoggedIn = () => {
-    const accessToken = JSON.parse(localStorage.getItem('accessToken'));
-    if (accessToken.token) {
-      console.log(accessToken.user);
-      setIsLoggedIn(true);
-      setUser(accessToken.user)
-    }
+    let userToken = JSON.parse(localStorage.getItem('accessToken'))
+    setAccessToken(userToken)
   };
 
   useEffect(() => {
     checkLoggedIn();
   }, []);
 
-  const loggedInHandler = (params) => {
-    console.log('is loggedin now',params);
-    setIsLoggedIn(params);
-  };
+  const tokenHandler = (token) => {
+   localStorage.setItem('accessToken', JSON.stringify(token));
+  setAccessToken(token)
+  }
 
-  const userHandler = (user) => {
-    console.log('is loggedin now',user);
-    setUser(user);
-  };
 
   return (
     <AuthContext.Provider
-      value={{ isLoggedIn, user, setIsLoggedIn: loggedInHandler, setUser:userHandler}}
+      value={{accessToken , setAccessToken:tokenHandler}}
     >
       {children}
     </AuthContext.Provider>

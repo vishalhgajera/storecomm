@@ -1,6 +1,6 @@
 // routes/authRoutes.js
 import express from 'express';
-import { signup, login , getUserData } from '../controllers/authController';
+import { signup, login } from '../controllers/authController';
 
 const router = express.Router();
 
@@ -9,9 +9,6 @@ router.post('/signup', signup);
 
 // Login route
 router.post('/login', login);
-
-// User Data route
-router.get('/userdata', getUserData);
 
 export default router;
 

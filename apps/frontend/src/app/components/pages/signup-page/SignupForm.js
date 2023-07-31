@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate  } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Container } from '@mui/system';
 import {
   Avatar,
@@ -7,32 +7,46 @@ import {
   Button,
   Checkbox,
   CssBaseline,
+  FormControl,
   FormControlLabel,
   Grid,
+  InputLabel,
   Link,
+  MenuItem,
   Paper,
+  Select,
   TextField,
   Typography,
 } from '@mui/material';
 import axios from 'axios';
+import { useAuth } from '../../../context/AuthContext';
 
 const SignupForm = () => {
-
-  const navigate = useNavigate ();
-  const [username, setUsername] = useState('demo@email.com');
+  const navigate = useNavigate();
+  const {  setAccessToken } = useAuth();
+  const [name, setName] = useState('');
+  const [role, setRole] = useState('customer');
+  const [email, setEmail] = useState('demo@email.com');
   const [password, setPassword] = useState('demo@1234');
 
   const handleSignup = async (e) => {
     e.preventDefault();
 
     try {
-      await axios.post('http://localhost:3333/auth/signup', { username, password });
-      alert('created new account');
-      navigate('/'); 
+      const response = await axios.post('http://localhost:3333/auth/signup', {
+        name,
+        role,
+        email,
+        password,
+      });
+      // alert('created new account');
+      // console.log(response.data);
+      setAccessToken(response.data);
+      navigate('/');
     } catch (err) {
       console.log(err);
       alert(err.response);
-      console.error(err);
+      // console.error(err);
     }
   };
 
@@ -40,14 +54,14 @@ const SignupForm = () => {
     <Box>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
-        <Paper sx={{ p: 2, mt: 5 }} >
+        <Paper sx={{ p: 2, mt: 5 }}>
           <Box
             pb={2}
             display={'flex'}
             alignItems={'center'}
             flexDirection={'column'}
           >
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main'}}/>
+            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }} />
             <Typography component="h1" variant="h5">
               Sign up
             </Typography>
@@ -57,31 +71,41 @@ const SignupForm = () => {
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  autoComplete="fname"
-                  name="firstName"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  autoComplete="fullname"
+                  name="fullname"
                   variant="outlined"
                   required
                   fullWidth
-                  id="firstName"
-                  label="First Name"
+                  id="fullname"
+                  label="Full Name"
                   autoFocus
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="lname"
-                />
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">Role</InputLabel>
+                  <Select
+                    value={role}
+                    onChange={(e) => setRole(e.target.value)}
+                    variant="outlined"
+                    required
+                    fullWidth
+                    id="role"
+                    label="Role"
+                    name="role"
+                  >
+                    <MenuItem value='admin'>Admin</MenuItem>
+                    <MenuItem value='customer'>Customer</MenuItem>
+                    <MenuItem value='supplier'>Supplier</MenuItem>
+                  </Select>
+                </FormControl>
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   variant="outlined"
                   required
                   fullWidth

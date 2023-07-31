@@ -2,8 +2,7 @@ import * as React from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
+import Sheet from '@mui/joy/Sheet';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
@@ -17,9 +16,12 @@ import MenuItem from '@mui/material/MenuItem';
 import StoreIcon from '@mui/icons-material/Store';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
+import CartDrawer from '../../pages/activity-page/user-cart/CartDrawer';
+import ModeToggle from './ModeToggle';
+import TypeJoy from '@mui/joy/Typography';
 
-const pages = ['Home', 'Shop', 'CartList'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const pages = ['Home', 'Shop','Activity','Checkout'];
+const settings = ['Profile','Activity'];
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -63,11 +65,14 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function Navbar() {
+export default function Navbar(prop) {
+
+  const user = prop.user;
+
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-  const { setIsLoggedIn } = useAuth();
+  const { setAccessToken } = useAuth();
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -84,20 +89,17 @@ export default function Navbar() {
     setAnchorElUser(null);
   };
 
+  const logoutHandler = () => {
+    setAccessToken({});
+  };
+
   return (
-    <AppBar position="static">
+    <Sheet position="fixed" sx={{
+      boxShadow: 'sm',
+    }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <StoreIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-          <Link
-            to="/"
-            style={{
-              my: 2,
-              color: 'white',
-              display: 'block',
-              textDecoration: 'none',
-            }}
-          >
             <Typography
               variant="h6"
               noWrap
@@ -114,8 +116,7 @@ export default function Navbar() {
             >
               ShopEcomm
             </Typography>
-          </Link>
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+          <Sheet sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -151,7 +152,7 @@ export default function Navbar() {
                 </MenuItem>
               ))}
             </Menu>
-          </Box>
+          </Sheet>
 
           <StoreIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
           <Typography
@@ -172,22 +173,13 @@ export default function Navbar() {
           >
             LOGO
           </Typography>
-          <Box
+          <Sheet
             sx={{
               flexGrow: 1,
               display: { xs: 'none', md: 'flex' },
               justifyContent: 'center',
             }}
           >
-            {/* {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                {page}
-              </Button>
-            ))} */}
 
             {pages.map((page) => (
               <Button key={page}>
@@ -195,31 +187,17 @@ export default function Navbar() {
                   to={page === 'Home' ? '/' : page}
                   style={{
                     my: 2,
-                    color: 'white',
                     display: 'block',
                     textDecoration: 'none',
                   }}
                 >
-                  {page}
+                <TypeJoy level="body1"> {page} </TypeJoy>
                 </Link>
               </Button>
             ))}
-             <Button >
-                <Link
-                  to='/login'
-                  onClick={(e)=>setIsLoggedIn(false)}
-                  style={{
-                    my: 2,
-                    color: 'white',
-                    display: 'block',
-                    textDecoration: 'none',
-                  }}
-                >
-                 Logout
-                </Link>
-              </Button>
-          </Box>
-          <Box sx={{ flexGrow: 1, justifyContent: 'center', pr: 5 }}>
+            
+          </Sheet>
+          <Sheet sx={{ flexGrow: 1, justifyContent: 'center', pr: 5 }}>
             <Search>
               <SearchIconWrapper>
                 <SearchIcon />
@@ -229,11 +207,13 @@ export default function Navbar() {
                 inputProps={{ 'aria-label': 'search' }}
               />
             </Search>
-          </Box>
-          <Box sx={{ flexGrow: 0, display: { xs: 'none', md: 'flex' } }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+          </Sheet>
+          <Sheet sx={{ flexGrow: 0, display: { xs: 'none', md: 'flex' } }}>
+             <ModeToggle></ModeToggle>
+             <CartDrawer/>
+            <Tooltip title={`Hello ${user.name}`} >
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0,mx: 2}}>
+                <Avatar alt={user.name} src="/static/images/avatar/2.jpg" />
               </IconButton>
             </Tooltip>
             <Menu
@@ -254,13 +234,33 @@ export default function Navbar() {
             >
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                <Link
+                  to={setting}
+                  style={{
+                    color: 'inherit',
+                    textDecoration: 'none',
+                  }}
+                >
+                <Typography textAlign="center">{setting}</Typography>
+                </Link>
+
                 </MenuItem>
               ))}
+              <MenuItem >
+                <Link
+                  to='/login'
+                  onClick={logoutHandler}
+                  style={{
+                    color: 'inherit',
+                    textDecoration: 'none',
+                  }}
+                ><Typography textAlign="center"> Logout</Typography>
+                </Link>
+              </MenuItem>
             </Menu>
-          </Box>
+          </Sheet>
         </Toolbar>
       </Container>
-    </AppBar>
+    </Sheet>
   );
 }

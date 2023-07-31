@@ -16,28 +16,19 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { Paper } from '@mui/material';
 
-
-export default function SignIn() {
+export default function LoginForm() {
   const navigate = useNavigate();
-  const { setIsLoggedIn , setUser} = useAuth(); 
+  const { setAccessToken} = useAuth(); 
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     try {
       const response = await axios.post('http://localhost:3333/auth/login', {
-        username: data.get('email'),
+        email: data.get('email'),
         password: data.get('password'),
       });
-      
-      console.log(response);
-      const accessToken = response.data;
-      // Store the access token in local storage or cookies
-      localStorage.setItem('accessToken', JSON.stringify(accessToken));
-      setIsLoggedIn(true);
-
-      // console.log(response.data);
-      setUser(response.data.user);
+      setAccessToken(response.data);
       navigate('/'); 
     } catch (error) {
       console.error(error.message);

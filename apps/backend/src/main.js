@@ -10,29 +10,27 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import connectDB from './db.js';
 import authRoutes from './routes/authRoutes.js';
+import productRoutes from './routes/productRoutes.js';
+import userCartRoutes from './routes/cartRoutes.js';
+import orderRoutes from './routes/orderRoutes.js';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+const port = process.env.PORT || 3333;
 
 const app = express();
 connectDB();
 app.use(express.json());
 app.use(bodyParser.json());
 
-// const whitelist = ["http://localhost:4200"]
-// const corsOptions = {
-//   origin: function (origin, callback) {
-//     if (!origin || whitelist.indexOf(origin) !== -1) {
-//       callback(null, true)
-//     } else {
-//       callback(new Error("Not allowed by CORS"))
-//     }
-//   },
-//   credentials: true,
-// }
-
 app.use(cors());
-
 
 // Routes
 app.use('/auth', authRoutes);
+app.use('/product', productRoutes);
+app.use('/cart', userCartRoutes);
+app.use('/order', orderRoutes);
 
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 
@@ -40,7 +38,6 @@ app.get('/api', (req, res) => {
   res.send({ message: 'Welcome to backend!' });
 });
 
-const port = process.env.PORT || 3333;
 const server = app.listen(port, () => {
   console.log(`Listening at http://localhost:${port}/api`);
 });

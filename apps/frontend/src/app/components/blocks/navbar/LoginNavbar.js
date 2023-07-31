@@ -1,6 +1,4 @@
 import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
@@ -11,8 +9,11 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import StoreIcon from '@mui/icons-material/Store';
 import { Link } from 'react-router-dom';
+import Sheet from '@mui/joy/Sheet';
+import TypeJoy from '@mui/joy/Typography';
+import ModeToggle from './ModeToggle';
 
-const pages = ['Home', 'Login', 'Signup'];
+const pages = ['Home','Shop','Login', 'Signup'];
 
 
 export default function LoginNavbar() {
@@ -27,12 +28,10 @@ export default function LoginNavbar() {
   }
 
   return (
-    <AppBar position="static">
+    <Sheet position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <StoreIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-
-          <Link to="/" style={{ my: 2, color: 'white', display: 'block',textDecoration:'none' }}>
           <Typography
             variant="h6"
             noWrap
@@ -49,9 +48,8 @@ export default function LoginNavbar() {
           >
             ShopEcomm
           </Typography>
-          </Link>
           
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+          <Sheet sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -87,7 +85,7 @@ export default function LoginNavbar() {
                 </MenuItem>
               ))}
             </Menu>
-          </Box>
+          </Sheet>
           
           <StoreIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
           <Typography
@@ -108,15 +106,18 @@ export default function LoginNavbar() {
           >
             ShopEcomm
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent:'end' } }>
+          <Sheet sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent:'end' } }>
             {pages.map((page) => (
               <Button  key={page} >
-                <Link to={page === 'Home'? "/" : page} style={{ my: 2, color: 'white', display: 'block',textDecoration:'none' }}>{page}</Link>
+                <Link to={page === 'Home'? "/" : page} style={{ my: 2, color: 'white', display: 'block',textDecoration:'none' }}>
+                <TypeJoy level="body1"> {page} </TypeJoy>
+                </Link>
               </Button>
             ))}
-          </Box>
+            <ModeToggle></ModeToggle>
+          </Sheet>
         </Toolbar>
       </Container>
-    </AppBar>
+    </Sheet>
   );
 }
