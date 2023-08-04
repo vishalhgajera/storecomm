@@ -94,8 +94,12 @@ export default function Navbar(prop) {
   };
 
   return (
-    <Sheet position="fixed" sx={{
+    <Sheet sx={{
       boxShadow: 'sm',
+      top: 0,
+      position: 'sticky',
+      zIndex: 5,
+      width: '100%',
     }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>

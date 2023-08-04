@@ -4,7 +4,6 @@ import Card from '@mui/joy/Card';
 import CardContent from '@mui/joy/CardContent';
 import CardOverflow from '@mui/joy/CardOverflow';
 import Chip from '@mui/joy/Chip';
-import Link from '@mui/joy/Link';
 import Typography from '@mui/joy/Typography';
 import ArrowOutwardIcon from '@mui/icons-material/ArrowOutward';
 import Box from '@mui/joy/Box';
@@ -14,9 +13,6 @@ import Favorite from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import Visibility from '@mui/icons-material/Visibility';
 import CardActions from '@mui/joy/CardActions';
-import ButtonGroup from '@mui/joy/ButtonGroup';
-import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 import { Checkbox } from '@mui/material';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
@@ -27,6 +23,8 @@ import { NavLink } from 'react-router-dom';
 import CardModal from './CardModal';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+
+import { useCart } from '../../../../context/CartContext';
 
 const StyledRating = styled(Rating)({
   paddingTop: '10px',
@@ -39,11 +37,16 @@ const StyledRating = styled(Rating)({
 });
 
 export default function NewCard(props) {
+  const { fetchUpdateCart } = useCart();
   const [open, setOpen] = React.useState(false);
 
   const modalHandler = (param) => {
     setOpen(param);
   };
+
+  const cartHandler = (productId,qty) => {
+    fetchUpdateCart(productId,qty)
+  }
 
   let item = props.item;
   return (
@@ -142,7 +145,6 @@ export default function NewCard(props) {
             fontWeight="xl"
             color="neutral"
             textColor="text.primary"
-            overlay
             endDecorator={<ArrowOutwardIcon />}
           >
             {item.title}
@@ -186,13 +188,11 @@ export default function NewCard(props) {
               fontWeight="xl"
               color="neutral"
               textColor="text.primary"
-              overlay
-              endDecorator
             >
               Add To Cart
             </Typography>
 
-            <IconButton sx={{ bgcolor: 'background.level2' }}>
+            <IconButton sx={{ bgcolor: 'background.level2' }} onClick={e => cartHandler(item._id,1)}>
               <Checkbox
                 icon={
                   <ShoppingCartOutlinedIcon

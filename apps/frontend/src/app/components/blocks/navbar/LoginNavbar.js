@@ -28,7 +28,13 @@ export default function LoginNavbar() {
   }
 
   return (
-    <Sheet position="static">
+    <Sheet sx={{
+      boxShadow: 'sm',
+      top: 0,
+      position: 'sticky',
+      zIndex: 5,
+      width: '100%',
+    }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <StoreIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />

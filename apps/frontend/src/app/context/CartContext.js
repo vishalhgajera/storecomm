@@ -1,27 +1,73 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState } from 'react';
+import axios from 'axios';
+import env from '../../../env.json'
 
 const CartContext = createContext();
+
 export const useCart = () => useContext(CartContext);
 
-export function CartProvider(props) {
-    const [items, setItems] = useState([])
-    const cartItems = items
-    const setCartItem = (value) => {
-        console.log(value);
-        value.qty = 1
-        const newItems = items.filter(e => !(e._id === value._id))
-        setItems([...newItems, value])
-    }
-    const updateQty = (id, qty) => {
-        const newItems = [...items];
-        newItems.map((e) => e._id === id ? e.qty = qty : e)
-        const deleteItem = newItems.filter(e => e.qty > 0)
-        setItems(deleteItem)
-    }
+const CartProvider = ({ children }) => {
+  const [isLoaded, setIsLoaded] = useState(false);
+  // const [items, setItems] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
+  
+  const fetchCart = async () => {
+    const url = `${env.API_URL}/cart/all`;
+    try {
+      const token = JSON.parse(localStorage.getItem('accessToken')); 
+      // Assuming you have stored the JWT token in localStorage
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token.token}`,
+        },
+      };
 
-    return (
-        <CartContext.Provider value={{ cartItems, setCartItem, updateQty }}>
-            {props.children}
-        </CartContext.Provider>
-    )
-}
+      const response = await axios.get(url, config);
+      setCartItems(response.data.cart);
+      setIsLoaded(true)
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const fetchUpdateCart = async (productId,qty) => {
+
+    const url = `${env.API_URL}/cart/${productId}/${qty}`;
+    
+    updateCartHandler(productId,qty);
+    try {
+      const token = JSON.parse(localStorage.getItem('accessToken')); 
+
+      console.log(token.token);
+      // Assuming you have stored the JWT token in localStorage
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token.token}`,
+        },
+      };
+
+      const response = await axios.post(url, null, config);
+      console.log(response);
+      fetchCart();
+      // setIsLoaded(true);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const updateCartHandler = (id, qty) => {
+    console.log(id, qty);
+    const newCartItems = [...cartItems];
+    newCartItems.map((e) => e.product._id === id ? e.qty = qty : e)
+    const deleteItem = newCartItems.filter(e => e.qty > 0)
+    setCartItems(deleteItem)
+  }
+
+  return (
+    <CartContext.Provider value={{ cartItems, isLoaded, fetchCart , fetchUpdateCart}}>
+      {children}
+    </CartContext.Provider>
+  );
+};
+
+export default CartProvider;

@@ -15,6 +15,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { Paper } from '@mui/material';
+import env from '../../../../../env.json';
 
 export default function LoginForm() {
   const navigate = useNavigate();
@@ -22,9 +23,10 @@ export default function LoginForm() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    const url = `${env.API_URL}/auth/login`;
     const data = new FormData(event.currentTarget);
     try {
-      const response = await axios.post('http://localhost:3333/auth/login', {
+      const response = await axios.post(url, {
         email: data.get('email'),
         password: data.get('password'),
       });

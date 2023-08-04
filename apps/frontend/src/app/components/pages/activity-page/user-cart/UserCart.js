@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react';
-import { useShop } from '../../../../context/ShopContext';
 import Grid from '@mui/material/Unstable_Grid2/Grid2';
 import CardSkeleton from '../../../blocks/cards/shop-card/CardSkeleton';
 import { Box, Container, CssBaseline } from '@mui/material';
 import ActivityCard from '../../../blocks/cards/activity-card/ActivityCard';
+import { useCart } from '../../../../context/CartContext';
 
 const UserCart = () => {
   const newArray = Array.from(Array(20).keys());
-  const { fetchShop, products, isLoaded } = useShop();
+  const { fetchCart, cartItems, isLoaded } = useCart();
   useEffect(() => {
-    fetchShop('all');
+    fetchCart('all');
   }, []);
   return (
     <div>
@@ -24,7 +24,7 @@ const UserCart = () => {
                 </Grid>
               ))}
             {isLoaded &&
-              products.map((item) => (
+              cartItems.map((item) => (
                 <Grid xs={12} sm={6} key={item._id}>
                   <ActivityCard item={item} />
                 </Grid>

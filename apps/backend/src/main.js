@@ -27,10 +27,10 @@ app.use(bodyParser.json());
 app.use(cors());
 
 // Routes
-app.use('/auth', authRoutes);
-app.use('/product', productRoutes);
-app.use('/cart', userCartRoutes);
-app.use('/order', orderRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/product', productRoutes);
+app.use('/api/cart', userCartRoutes);
+app.use('/api/order', orderRoutes);
 
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 

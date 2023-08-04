@@ -20,6 +20,7 @@ import {
 } from '@mui/material';
 import axios from 'axios';
 import { useAuth } from '../../../context/AuthContext';
+import env from '../../../../../env.json';
 
 const SignupForm = () => {
   const navigate = useNavigate();
@@ -32,8 +33,10 @@ const SignupForm = () => {
   const handleSignup = async (e) => {
     e.preventDefault();
 
+    const url = `${env.API_URL}/auth/signup`;
+
     try {
-      const response = await axios.post('http://localhost:3333/auth/signup', {
+      const response = await axios.post(url, {
         name,
         role,
         email,
