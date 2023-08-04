@@ -25,7 +25,7 @@ const UserCart = () => {
               ))}
             {isLoaded &&
               cartItems.map((item) => (
-                <Grid xs={12} sm={6} key={item._id}>
+                <Grid xs={12} sm={6} key={item.product._id}>
                   <ActivityCard item={item} />
                 </Grid>
               ))}

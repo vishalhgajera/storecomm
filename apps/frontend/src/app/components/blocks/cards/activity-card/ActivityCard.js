@@ -17,8 +17,8 @@ export default function ActivityCard(props) {
   let item = !props.item.product ? {} : props.item.product;
   let qty = !props.item.qty ? 0 : props.item.qty;
 
-  const cartHandler = (productId,qty) => {
-    fetchUpdateCart(productId,qty)
+  const cartHandler = (product,proQty) => {
+    fetchUpdateCart(product,proQty)
   }
 
   return (
@@ -83,7 +83,7 @@ export default function ActivityCard(props) {
           ml:'auto'
           }}>
           <Link
-            onClick={e=>cartHandler(item._id,0)}
+            onClick={e=>cartHandler(item,0)}
             color="danger"
             sx={{
               // boxShadow: '0 2px 1px 0 rgba(0 0 0 / 0.1)',

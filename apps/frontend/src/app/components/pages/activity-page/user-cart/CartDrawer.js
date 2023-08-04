@@ -48,7 +48,7 @@ export default function CartDrawer() {
             <Box>
                 {isLoaded &&
                 cartItems.map((item) => (
-                    <Box sx={{m:1}} key={item._id}>
+                    <Box sx={{m:1}} key={item.product._id}>
                       <ActivityCard item={item} />
                     </Box>
                 ))}

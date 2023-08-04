@@ -44,8 +44,8 @@ export default function NewCard(props) {
     setOpen(param);
   };
 
-  const cartHandler = (productId,qty) => {
-    fetchUpdateCart(productId,qty)
+  const cartHandler = (product,qty) => {
+    fetchUpdateCart(product,qty)
   }
 
   let item = props.item;
@@ -192,7 +192,7 @@ export default function NewCard(props) {
               Add To Cart
             </Typography>
 
-            <IconButton sx={{ bgcolor: 'background.level2' }} onClick={e => cartHandler(item._id,1)}>
+            <IconButton sx={{ bgcolor: 'background.level2' }} onClick={e => cartHandler(item,1)}>
               <Checkbox
                 icon={
                   <ShoppingCartOutlinedIcon

@@ -30,11 +30,11 @@ const CartProvider = ({ children }) => {
     }
   };
 
-  const fetchUpdateCart = async (productId,qty) => {
+  const fetchUpdateCart = async (product,qty) => {
 
-    const url = `${env.API_URL}/cart/${productId}/${qty}`;
+    const url = `${env.API_URL}/cart/${product._id}/${qty}`;
     
-    updateCartHandler(productId,qty);
+    // updateCartHandler(productId,qty);
     try {
       const token = JSON.parse(localStorage.getItem('accessToken')); 
 
@@ -48,19 +48,26 @@ const CartProvider = ({ children }) => {
 
       const response = await axios.post(url, null, config);
       console.log(response);
-      fetchCart();
+      // fetchCart();
+      updateCartHandler(product,qty);
       // setIsLoaded(true);
     } catch (error) {
       console.error(error);
     }
   };
 
-  const updateCartHandler = (id, qty) => {
-    console.log(id, qty);
+  const updateCartHandler = (item, qty) => {
     const newCartItems = [...cartItems];
-    newCartItems.map((e) => e.product._id === id ? e.qty = qty : e)
-    const deleteItem = newCartItems.filter(e => e.qty > 0)
-    setCartItems(deleteItem)
+    const findById = newCartItems.findIndex((e) => e.product._id === item._id);
+    if(findById > -1){
+      newCartItems.map((e) => e.product._id === item._id ? e.qty = qty : e);
+      const deleteItem = newCartItems.filter(e => e.qty > 0)
+      setCartItems(deleteItem)
+    }
+    else{
+      newCartItems.push({product:item,qty});
+      setCartItems(newCartItems);
+    }
   }
 
   return (

@@ -19,7 +19,6 @@ export const getAllOrdersByCustomerId = async (req, res) => {
 };
 
 export const updateOrDeleteOrder = async (req, res) => {
-  debugger
   try {
     const customerId  = req.userId;
     const {productID } = req.params;
