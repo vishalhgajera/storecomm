@@ -5,7 +5,6 @@ import env from '../../../env.json';
 const ShopContext = createContext();
 
 export const useShop = () => useContext(ShopContext);
-
 const ShopProvider = ({ children }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [items, setItems] = useState([]);

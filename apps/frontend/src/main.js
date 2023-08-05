@@ -6,6 +6,8 @@ import AuthProvider from '../src/app/context/AuthContext'; // Import the AuthPro
 import ProductProvider from './app/context/ProductContext';
 import ShopProvider from './app/context/ShopContext';
 import CartProvider from './app/context/CartContext';
+import { Provider } from 'react-redux';
+import store from './app/store/store';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <StrictMode>
@@ -14,7 +16,9 @@ root.render(
     <ShopProvider>
     <ProductProvider>
       <CartProvider>
+      <Provider store={store}>
       <App />
+      </Provider>
       </CartProvider>
     </ProductProvider>
     </ShopProvider>
@@ -22,3 +26,5 @@ root.render(
     </BrowserRouter>
   </StrictMode>
 );
+
+

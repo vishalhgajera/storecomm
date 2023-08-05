@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import AspectRatio from '@mui/joy/AspectRatio';
 import Card from '@mui/joy/Card';
 import CardContent from '@mui/joy/CardContent';
@@ -9,18 +10,19 @@ import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import ClearIcon from '@mui/icons-material/Clear';
 import { Box, Button, ButtonGroup, CardActions, IconButton, Link } from '@mui/joy';
-import { useCart } from '../../../../context/CartContext';
+import { fetchUpdateCartData } from '../../../../store/cartSlice'; 
 
 
 export default function ActivityCard(props) {
-  const { fetchUpdateCart } = useCart();
+  const dispatch = useDispatch();
   let item = !props.item.product ? {} : props.item.product;
-  let qty = !props.item.qty ? 0 : props.item.qty;
+  const cartItems = useSelector((state) => state.cart.cartItems); // Access the cart state using useSelector
+  let qty = cartItems.find((e) => e.product._id === item._id)?.qty || 0;
 
-  const cartHandler = (product,proQty) => {
-    fetchUpdateCart(product,proQty)
-  }
-
+  const cartHandler = (product, proQty) => {
+    dispatch(fetchUpdateCartData({ product, qty: proQty })); // Dispatch the action with the product and new quantity
+  };
+  
   return (
       <Card
         orientation="horizontal"

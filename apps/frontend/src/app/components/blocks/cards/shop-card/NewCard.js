@@ -23,8 +23,9 @@ import { NavLink } from 'react-router-dom';
 import CardModal from './CardModal';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-
-import { useCart } from '../../../../context/CartContext';
+import { fetchUpdateCartData } from '../../../../store/cartSlice'; 
+import { useDispatch } from 'react-redux';
+import { useState } from 'react';
 
 const StyledRating = styled(Rating)({
   paddingTop: '10px',
@@ -37,18 +38,27 @@ const StyledRating = styled(Rating)({
 });
 
 export default function NewCard(props) {
-  const { fetchUpdateCart } = useCart();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [inCart, setInCart] = useState(false);
+  const dispatch = useDispatch();
+
+  const cartHandler = (product, proQty) => {
+    if (inCart) {
+      // If item is already in the cart, delete it
+      dispatch(fetchUpdateCartData({ product, qty: 0 }));
+    } else {
+      // If item is not in the cart, add it
+      dispatch(fetchUpdateCartData({ product, qty: proQty }));
+    }
+    // Toggle the inCart state
+    setInCart((prevInCart) => !prevInCart);
+  };
 
   const modalHandler = (param) => {
     setOpen(param);
   };
 
-  const cartHandler = (product,qty) => {
-    fetchUpdateCart(product,qty)
-  }
-
-  let item = props.item;
+  let item = !props.item ? {} : props.item;
   return (
     <Card
       sx={{
@@ -209,6 +219,8 @@ export default function NewCard(props) {
                     }}
                   />
                 }
+                // Update the checked prop based on whether the item is in the cart or not
+                checked={inCart}
               />
             </IconButton>
           </Box>

@@ -6,18 +6,21 @@ import LocalGroceryStoreIcon from '@mui/icons-material/LocalGroceryStore';
 import ChevronRightIcon from '@mui/icons-material/ChevronLeft';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import { useCart } from '../../../../context/CartContext';
+import { Box } from '@mui/joy';
 import { useEffect } from 'react';
 import ActivityCard from '../../../blocks/cards/activity-card/ActivityCard';
-import { Box } from '@mui/joy';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCartData, updateCart } from '../../../../store/cartSlice';
 
 export default function CartDrawer() {
     const anchor = 'right';
     const [open, setOpen] = React.useState(false);
-    const { fetchCart, cartItems, isLoaded } = useCart();
+    const dispatch = useDispatch();
+    const { cartItems, isLoaded, error } = useSelector((state) => state.cart);
+  
     useEffect(() => {
-      fetchCart('all');
-    }, []);
+      dispatch(fetchCartData());
+    }, [dispatch] );
 
     const toggleDrawer = (value) => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {

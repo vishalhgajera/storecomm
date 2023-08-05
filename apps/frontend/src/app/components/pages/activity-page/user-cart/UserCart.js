@@ -3,14 +3,19 @@ import Grid from '@mui/material/Unstable_Grid2/Grid2';
 import CardSkeleton from '../../../blocks/cards/shop-card/CardSkeleton';
 import { Box, Container, CssBaseline } from '@mui/material';
 import ActivityCard from '../../../blocks/cards/activity-card/ActivityCard';
-import { useCart } from '../../../../context/CartContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCartData, updateCart } from '../../../../store/cartSlice';
 
 const UserCart = () => {
   const newArray = Array.from(Array(20).keys());
-  const { fetchCart, cartItems, isLoaded } = useCart();
+
+  const dispatch = useDispatch();
+  const { cartItems, isLoaded, error } = useSelector((state) => state.cart);
+
   useEffect(() => {
-    fetchCart('all');
-  }, []);
+    dispatch(fetchCartData());
+  }, [dispatch] );
+
   return (
     <div>
       <Box component="main" sx={{ pt: 0 }}>
