@@ -26,7 +26,6 @@ export default function ActivityCard(props) {
   return (
       <Card
         orientation="horizontal"
-        variant="outlined"
         sx={{
           width: '100%',
           bgcolor: 'background.body',

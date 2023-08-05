@@ -20,7 +20,6 @@ import {
 } from '@mui/material';
 import axios from 'axios';
 import { useAuth } from '../../../context/AuthContext';
-import env from '../../../../../env.json';
 
 const SignupForm = () => {
   const navigate = useNavigate();
@@ -29,11 +28,12 @@ const SignupForm = () => {
   const [role, setRole] = useState('customer');
   const [email, setEmail] = useState('demo@email.com');
   const [password, setPassword] = useState('demo@1234');
+  const API_URL = process.env.NX_API_URL;
 
   const handleSignup = async (e) => {
     e.preventDefault();
 
-    const url = `${env.API_URL}/auth/signup`;
+    const url = `${API_URL}/auth/signup`;
 
     try {
       const response = await axios.post(url, {

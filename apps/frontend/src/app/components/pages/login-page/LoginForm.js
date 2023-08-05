@@ -15,15 +15,15 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { Paper } from '@mui/material';
-import env from '../../../../../env.json';
 
 export default function LoginForm() {
   const navigate = useNavigate();
   const { setAccessToken} = useAuth(); 
+  const API_URL = process.env.NX_API_URL;
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const url = `${env.API_URL}/auth/login`;
+    const url = `${API_URL}/auth/login`;
     const data = new FormData(event.currentTarget);
     try {
       const response = await axios.post(url, {

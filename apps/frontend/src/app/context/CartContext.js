@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useState } from 'react';
 import axios from 'axios';
-import env from '../../../env.json'
 
 const CartContext = createContext();
+const API_URL = process.env.NX_API_URL;
 
 export const useCart = () => useContext(CartContext);
 
@@ -12,7 +12,7 @@ const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
   
   const fetchCart = async () => {
-    const url = `${env.API_URL}/cart/all`;
+    const url = `${API_URL}/cart/all`;
     try {
       const token = JSON.parse(localStorage.getItem('accessToken')); 
       // Assuming you have stored the JWT token in localStorage
@@ -32,7 +32,7 @@ const CartProvider = ({ children }) => {
 
   const fetchUpdateCart = async (product,qty) => {
 
-    const url = `${env.API_URL}/cart/${product._id}/${qty}`;
+    const url = `${API_URL}/cart/${product._id}/${qty}`;
     
     // updateCartHandler(productId,qty);
     try {

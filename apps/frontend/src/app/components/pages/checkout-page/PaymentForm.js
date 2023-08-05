@@ -1,65 +1,128 @@
 import * as React from 'react';
-import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
+import Card from '@mui/joy/Card';
+import CardActions from '@mui/joy/CardActions';
+import CardContent from '@mui/joy/CardContent';
+import Checkbox from '@mui/joy/Checkbox';
+import Divider from '@mui/joy/Divider';
+import FormControl from '@mui/joy/FormControl';
+import FormLabel from '@mui/joy/FormLabel';
+import Input from '@mui/joy/Input';
+import Typography from '@mui/joy/Typography';
+import Button from '@mui/joy/Button';
+import InfoOutlined from '@mui/icons-material/InfoOutlined';
+import CreditCardIcon from '@mui/icons-material/CreditCard';
+import { Box, List, ListItem, Radio, RadioGroup } from '@mui/joy';
 
 export default function PaymentForm() {
   return (
-    <React.Fragment>
-      <Typography variant="h6" gutterBottom>
-        Payment method
-      </Typography>
-      <Grid container spacing={3}>
-        <Grid item xs={12} md={6}>
-          <TextField
-            required
-            id="cardName"
-            label="Name on card"
-            fullWidth
-            autoComplete="cc-name"
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <TextField
-            required
-            id="cardNumber"
-            label="Card number"
-            fullWidth
-            autoComplete="cc-number"
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <TextField
-            required
-            id="expDate"
-            label="Expiry date"
-            fullWidth
-            autoComplete="cc-exp"
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <TextField
-            required
-            id="cvv"
-            label="CVV"
-            helperText="Last three digits on signature strip"
-            fullWidth
-            autoComplete="cc-csc"
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <FormControlLabel
-            control={<Checkbox color="secondary" name="saveCard" value="yes" />}
-            label="Remember credit card details for next time"
-          />
-        </Grid>
-      </Grid>
-    </React.Fragment>
+    <Box>
+      <RadioGroup
+        aria-labelledby="example-payment-channel-label"
+        overlay
+        name="example-payment-channel"
+        defaultValue="Paypal"
+      >
+        <List
+          component="div"
+          variant="outlined"
+          orientation="verticle"
+        >
+          <ListItem>
+            <Box sx={{width: '100%'}}>
+            <Radio value="card" label="Credit Card" />
+            <Card
+            
+              variant="outlined"
+              sx={{
+                my:2,
+                maxHeight: 'max-content',
+                maxWidth: '100%',
+                mx: 'auto',
+                // to make the demo resizable
+                overflow: 'auto',
+                // resize: 'horizontal',
+              }}
+            >
+              <Typography level="title-lg" startDecorator={<InfoOutlined />}>
+                Add new card
+              </Typography>
+              <Divider inset="none" />
+              <CardContent
+                sx={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(2, minmax(80px, 1fr))',
+                  gap: 1.5,
+                }}
+              >
+                <FormControl sx={{ gridColumn: '1/-1' }}>
+                  <FormLabel>Card number</FormLabel>
+                  <Input endDecorator={<CreditCardIcon />} />
+                </FormControl>
+                <FormControl>
+                  <FormLabel>Expiry date</FormLabel>
+                  <Input endDecorator={<CreditCardIcon />} />
+                </FormControl>
+                <FormControl>
+                  <FormLabel>CVC/CVV</FormLabel>
+                  <Input endDecorator={<InfoOutlined />} />
+                </FormControl>
+                <FormControl sx={{ gridColumn: '1/-1' }}>
+                  <FormLabel>Card holder name</FormLabel>
+                  <Input placeholder="Enter cardholder's full name" autoComplete="Cardholder's full name" />
+                </FormControl>
+                <Checkbox label="Save card" sx={{ gridColumn: '1/-1', my: 1 }} />
+                <CardActions sx={{ gridColumn: '1/-1' }}>
+                  <Button variant="solid" color="primary">
+                    Submit
+                  </Button>
+                </CardActions>
+              </CardContent>
+              </Card>
+            </Box>
+          </ListItem>
+          <ListItem>
+            <Box sx={{width: '100%'}}>
+            <Radio value="Paypal" label="Paypal" />
+            <Card
+              variant="outlined"
+              sx={{
+                my:2,
+                maxHeight: 'max-content',
+                width: '100%',
+                mx: 'auto',
+                // to make the demo resizable
+                overflow: 'auto',
+                // resize: 'horizontal',
+              }}
+            >
+              <CardContent
+                sx={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(2, minmax(80px, 1fr))',
+                  gap: 1.5,
+                }}
+              >
+                <FormControl sx={{ gridColumn: '1/-1' }}>
+                  <FormLabel>Paypal Email</FormLabel>
+                  <Input placeholder="Paypal Email" autoComplete="email" />
+                </FormControl>
+                <Checkbox label="Save Paypal" sx={{ gridColumn: '1/-1', my: 1 }} />
+                <CardActions sx={{ gridColumn: '1/-1' }}>
+                  <Button variant="solid" color="primary">
+                    Submit
+                  </Button>
+                </CardActions>
+              </CardContent>
+              </Card>
+            </Box>
+          </ListItem>
+          <ListItem>
+            <Box sx={{width: '100%'}}>
+              <Radio value="cod" label="Cash On Delhivery" />
+            </Box>
+          </ListItem>
+        </List>
+      </RadioGroup>
+    </Box>
   );
 }

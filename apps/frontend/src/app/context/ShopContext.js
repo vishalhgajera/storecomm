@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState } from 'react';
 import axios from 'axios';
-import env from '../../../env.json';
 
+const API_URL = process.env.NX_API_URL;
 const ShopContext = createContext();
 
 export const useShop = () => useContext(ShopContext);
@@ -11,7 +11,7 @@ const ShopProvider = ({ children }) => {
   const [products, setproducts] = useState([]);
   
   const fetchShop = () => {
-    const url = `${env.API_URL}/product/all`;
+    const url = `${API_URL}/product/all`;
     axios
     .get(url)
     .then(function (response) {

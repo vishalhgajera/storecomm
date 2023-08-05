@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react';
 import Grid from '@mui/material/Unstable_Grid2/Grid2';
-import CardSkeleton from '../../../blocks/cards/shop-card/CardSkeleton';
-import { Box, Container, CssBaseline } from '@mui/material';
+import { Box } from '@mui/material';
 import ActivityCard from '../../../blocks/cards/activity-card/ActivityCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCartData, updateCart } from '../../../../store/cartSlice';
+import CheckoutCard from '../../../blocks/cards/activity-card/checkoutCard';
 
 const UserCart = () => {
-  const newArray = Array.from(Array(20).keys());
 
   const dispatch = useDispatch();
   const { cartItems, isLoaded, error } = useSelector((state) => state.cart);
@@ -19,23 +18,21 @@ const UserCart = () => {
   return (
     <div>
       <Box component="main" sx={{ pt: 0 }}>
-        <CssBaseline />
-        <Container maxWidth="xl">
           <Grid container spacing={{ xs: 2 }} columns={{ sm: 12 }}>
-            {!isLoaded &&
-              newArray.map((item, index) => (
-                <Grid xs={12} sm={6} key={index}>
-                  <CardSkeleton />
-                </Grid>
-              ))}
+            <Grid xs={12} sm={6} lg={8}>
             {isLoaded &&
               cartItems.map((item) => (
-                <Grid xs={12} sm={6} key={item.product._id}>
-                  <ActivityCard item={item} />
-                </Grid>
-              ))}
+                  <Box sx={{pb:1}} key={item.product._id}>
+                    <ActivityCard item={item}  />
+                  </Box>
+                  ))}
+            </Grid>
+            <Grid xs={12} sm={6} lg={4}>
+              {isLoaded &&
+                <CheckoutCard allItem={cartItems}/>
+              }
+            </Grid>
           </Grid>
-        </Container>
       </Box>
     </div>
   );

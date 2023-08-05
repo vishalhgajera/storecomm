@@ -11,7 +11,7 @@ import Typography from '@mui/joy/Typography';
 import Button from '@mui/joy/Button';
 import InfoOutlined from '@mui/icons-material/InfoOutlined';
 
-export default function AddressForm() {
+export default function AddressCard() {
   return (
     <Card
       variant="outlined"

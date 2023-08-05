@@ -1,10 +1,13 @@
 import React from 'react'
 import Checkout from './Checkout'
+import { Container } from '@mui/material'
 
 const CheckoutPage = () => {
   return (
     <div>
-      <Checkout/>
+      <Container maxWidth="md" className="App">
+          <Checkout/> 
+      </Container> 
     </div>
   )
 }

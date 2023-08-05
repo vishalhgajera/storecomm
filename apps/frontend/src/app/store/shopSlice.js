@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import env from '../../../env.json';
 
+const API_URL = process.env.NX_API_URL;
 const shopSlice = createSlice({
   name: 'shop',
   initialState: {
@@ -35,7 +35,7 @@ export default shopSlice.reducer;
 // Async Thunk for fetching data
 export const fetchShopData = () => async (dispatch) => {
   try {
-    const url = `${env.API_URL}/product/all`;
+    const url = `${API_URL}/product/all`;
     const response = await axios.get(url);
     dispatch(setShopData({ items: response.data.product, products: response.data.product.slice(0, 20) }));
   } catch (error) {

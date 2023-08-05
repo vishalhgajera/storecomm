@@ -1,11 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import env from '../../../env.json';
 
+const API_URL = process.env.NX_API_URL;
 // Async Thunk for fetching cart data
+
 export const fetchCartData = createAsyncThunk('cart/fetchCartData', async (_, thunkAPI) => {
   try {
-    const url = `${env.API_URL}/cart/all`;
+    const url = `${API_URL}/cart/all`;  
     const token = JSON.parse(localStorage.getItem('accessToken'));
     // Assuming you have stored the JWT token in localStorage
     const config = {
@@ -28,7 +29,7 @@ export const fetchUpdateCartData = createAsyncThunk(
   'cart/fetchUpdateCartData',
   async ({ product, qty }, thunkAPI) => {
     try {
-      const url = `${env.API_URL}/cart/${product._id}/${qty}`;
+      const url = `${API_URL}/cart/${product._id}/${qty}`;
       const token = JSON.parse(localStorage.getItem('accessToken'));
       // Assuming you have stored the JWT token in localStorage
       const config = {
@@ -37,7 +38,7 @@ export const fetchUpdateCartData = createAsyncThunk(
         },
       };
 
-      const response = await axios.post(url, null, config);
+      await axios.post(url, null, config);
       return { product, qty };
     } catch (error) {
       console.error(error);

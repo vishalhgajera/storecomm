@@ -172,7 +172,7 @@ export default function NewCard(props) {
           </Typography>
         </NavLink>
 
-        <Typography level="body3">{item.description}</Typography>
+        {/* <Typography level="body3">{item.description}</Typography> */}
 
         <Typography
           fontSize="xl"
