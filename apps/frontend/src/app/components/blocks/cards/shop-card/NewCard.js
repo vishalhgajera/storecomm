@@ -24,8 +24,9 @@ import CardModal from './CardModal';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { fetchUpdateCartData } from '../../../../store/cartSlice'; 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
+import { useEffect } from 'react';
 
 const StyledRating = styled(Rating)({
   paddingTop: '10px',
@@ -38,9 +39,19 @@ const StyledRating = styled(Rating)({
 });
 
 export default function NewCard(props) {
+
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cart.cartItems);
+
   const [open, setOpen] = useState(false);
   const [inCart, setInCart] = useState(false);
-  const dispatch = useDispatch();
+    // Check if the item is already in the cart after loading data
+    useEffect(() => {
+      const foundInCart = cartItems.some((cartItem) => cartItem.product._id === props.item._id);
+      setInCart(foundInCart);
+    }, [cartItems, props.item._id]);
+
+
 
   const cartHandler = (product, proQty) => {
     if (inCart) {
