@@ -15,10 +15,12 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import StoreIcon from '@mui/icons-material/Store';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../../../context/AuthContext';
 import CartDrawer from '../../pages/activity-page/cart-list/CartDrawer';
 import ModeToggle from './ModeToggle';
 import TypeJoy from '@mui/joy/Typography';
+
+import {logout} from '../../../store/authSlice'
+import { useDispatch } from 'react-redux';
 
 const pages = ['Home', 'Shop','Activity','Checkout'];
 const settings = ['Profile','Activity'];
@@ -67,12 +69,12 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function Navbar(prop) {
 
+  const dispatch = useDispatch();
+
   const user = prop.user;
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-
-  const { setAccessToken } = useAuth();
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -90,7 +92,7 @@ export default function Navbar(prop) {
   };
 
   const logoutHandler = () => {
-    setAccessToken({});
+    dispatch(logout())
   };
 
   return (

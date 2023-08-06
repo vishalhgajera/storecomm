@@ -18,42 +18,25 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import axios from 'axios';
-import { useAuth } from '../../../context/AuthContext';
+import { useDispatch } from 'react-redux';
+import {fetchSignup} from '../../../store/authSlice'
 
 const SignupForm = () => {
-  const navigate = useNavigate();
-  const {  setAccessToken } = useAuth();
   const [name, setName] = useState('');
   const [role, setRole] = useState('customer');
   const [email, setEmail] = useState('demo@email.com');
-  const [password, setPassword] = useState('demo@1234');
-  const API_URL = process.env.NX_API_URL;
+  const [password, setPassword] = useState('demo@1234')
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSignup = async (e) => {
     e.preventDefault();
-
-    const url = `${API_URL}/auth/signup`;
-
-    try {
-      const response = await axios.post(url, {
-        name,
-        role,
-        email,
-        password,
-      });
-      // alert('created new account');
-      // console.log(response.data);
-      setAccessToken(response.data);
-      navigate('/');
-    } catch (err) {
-      console.log(err);
-      alert(err.response);
-      // console.error(err);
-    }
+    const data = { name, role, email, password}
+    dispatch(fetchSignup({data,navigate}));
   };
-
   return (
+
     <Box>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
