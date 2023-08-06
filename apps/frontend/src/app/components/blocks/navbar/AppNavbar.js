@@ -16,7 +16,7 @@ import MenuItem from '@mui/material/MenuItem';
 import StoreIcon from '@mui/icons-material/Store';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
-import CartDrawer from '../../pages/activity-page/user-cart/CartDrawer';
+import CartDrawer from '../../pages/activity-page/cart-list/CartDrawer';
 import ModeToggle from './ModeToggle';
 import TypeJoy from '@mui/joy/Typography';
 

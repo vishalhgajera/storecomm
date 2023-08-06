@@ -1,25 +1,15 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import axiosInstance from '../api/axiosInstance'
 
-const API_URL = process.env.NX_API_URL;
 // Async Thunk for fetching cart data
 
 export const fetchCartData = createAsyncThunk('cart/fetchCartData', async (_, thunkAPI) => {
   try {
-    const url = `${API_URL}/cart/all`;  
-    const token = JSON.parse(localStorage.getItem('accessToken'));
-    // Assuming you have stored the JWT token in localStorage
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token.token}`,
-      },
-    };
-
-    const response = await axios.get(url, config);
+    const url = '/cart/all'; // No need to use the full URL, as it's defined in the Axios instance
+    const response = await axiosInstance.get(url);
     return response.data.cart;
   } catch (error) {
     console.error(error);
-    // Throwing error here will be caught in the rejected action
     throw error;
   }
 });
@@ -29,24 +19,16 @@ export const fetchUpdateCartData = createAsyncThunk(
   'cart/fetchUpdateCartData',
   async ({ product, qty }, thunkAPI) => {
     try {
-      const url = `${API_URL}/cart/${product._id}/${qty}`;
-      const token = JSON.parse(localStorage.getItem('accessToken'));
-      // Assuming you have stored the JWT token in localStorage
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token.token}`,
-        },
-      };
-
-      await axios.post(url, null, config);
+      const url = `/cart/${product._id}/${qty}`;
+      await axiosInstance.post(url, null);
       return { product, qty };
     } catch (error) {
       console.error(error);
-      // Throwing error here will be caught in the rejected action
       throw error;
     }
   }
 );
+
 
 const cartSlice = createSlice({
   name: 'cart',

@@ -38,7 +38,7 @@ const StyledRating = styled(Rating)({
   },
 });
 
-export default function NewCard(props) {
+export default function ShopCard(props) {
 
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.cartItems);

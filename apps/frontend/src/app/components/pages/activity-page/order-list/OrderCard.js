@@ -5,7 +5,7 @@ import Typography from '@mui/joy/Typography';
 import { CardOverflow, IconButton } from '@mui/joy';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
-export default function RowCard() {
+export default function OrderCard() {
   return (
     <Card orientation="horizontal" variant="outlined" sx={{ width: "100%",mb:1 }}>
       <CardContent>

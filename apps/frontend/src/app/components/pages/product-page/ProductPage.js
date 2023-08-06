@@ -8,7 +8,7 @@ import ViewProduct from './ViewProduct';
 const ProductPage = () => {
 
 const { productId } = useParams();
-const { fetchProduct, products, isLoaded } = useProduct();
+const { fetchProduct, product, isLoaded } = useProduct();
 useEffect(() => {
     fetchProduct(productId);
 }, []);
@@ -17,7 +17,7 @@ useEffect(() => {
   return (
     <div>
        <Container maxWidth="xl" className="App">
-          {isLoaded && <ViewProduct data={products}></ViewProduct>}
+          {isLoaded && <ViewProduct data={product}></ViewProduct>}
         </Container>    
     </div>
   )

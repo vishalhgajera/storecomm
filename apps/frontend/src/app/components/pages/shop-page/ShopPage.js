@@ -1,28 +1,19 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Grid from '@mui/material/Unstable_Grid2/Grid2';
-import CardSkeleton from '../../blocks/cards/shop-card/CardSkeleton';
+import CardSkeleton from './shop-card/CardSkeleton';
 import { Box, Container, CssBaseline, Typography } from '@mui/material';
-import NewCard from '../../blocks/cards/shop-card/NewCard';
-import { fetchShopData, setFilterList, setFullList } from '../../../store/shopSlice';
-import { useState } from 'react';
+import ShopCard from './shop-card/ShopCard';
+import { fetchProductData } from '../../../store/productSlice';
 
 const ShopPage = () => {
   const dispatch = useDispatch();
-  const { products, isLoaded, error } = useSelector((state) => state.shop);
+  const { productList, isLoaded, error } = useSelector((state) => state.product);
   const newArray = Array.from(Array(20).keys());
 
   useEffect(() => {
-    dispatch(fetchShopData());
+    dispatch(fetchProductData());
   }, []);
-
-  const handleFilter = (value) => {
-    dispatch(setFilterList(value));
-  };
-
-  const handleFullList = () => {
-    dispatch(setFullList());
-  };
 
   return (
     <div>  
@@ -36,9 +27,9 @@ const ShopPage = () => {
           )}
            <Grid container spacing={{ xs: 2 }} columns={{ sm: 12 }}>
           {isLoaded
-            ? products.map((item) => (
+            ? productList.map((item) => (
                 <Grid xs={12} sm={6} md={4} lg={3} key={item._id}>
-                  <NewCard item={item} />
+                  <ShopCard item={item} />
                 </Grid>
               ))
             : newArray.map((item, index) => (

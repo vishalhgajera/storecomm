@@ -13,7 +13,7 @@ import { Box, ButtonGroup, IconButton } from '@mui/joy';
 import { fetchUpdateCartData } from '../../../../store/cartSlice'; 
 
 
-export default function ActivityCard(props) {
+export default function CartItemCard(props) {
   const dispatch = useDispatch();
   let item = !props.item.product ? {} : props.item.product;
   const cartItems = useSelector((state) => state.cart.cartItems); // Access the cart state using useSelector
