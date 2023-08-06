@@ -8,7 +8,7 @@ import { fetchProductData } from '../../../store/productSlice';
 
 const ShopPage = () => {
   const dispatch = useDispatch();
-  const { productList, isLoaded, error } = useSelector((state) => state.product);
+  const { productList, isLoaded, error } = useSelector((state) => state.products);
   const newArray = Array.from(Array(20).keys());
 
   useEffect(() => {

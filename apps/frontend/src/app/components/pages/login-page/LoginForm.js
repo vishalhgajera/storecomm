@@ -1,7 +1,5 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { useAuth } from '../../../context/AuthContext';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -15,27 +13,19 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { Paper } from '@mui/material';
+import { useDispatch } from 'react-redux';
+import {fetchLogin} from '../../../store/authSlice'
+
 
 export default function LoginForm() {
+
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { setAccessToken} = useAuth(); 
-  const API_URL = process.env.NX_API_URL;
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const url = `${API_URL}/auth/login`;
     const data = new FormData(event.currentTarget);
-    try {
-      const response = await axios.post(url, {
-        email: data.get('email'),
-        password: data.get('password'),
-      });
-      setAccessToken(response.data);
-      navigate('/'); 
-    } catch (error) {
-      console.error(error.message);
-      alert(error.message);
-    }
+    dispatch(fetchLogin({data,navigate})); 
   };
 
   return (

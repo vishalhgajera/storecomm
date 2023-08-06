@@ -1,19 +1,18 @@
 import React, { useEffect } from 'react'
 import { Container } from '@mui/material'
 import { useParams } from "react-router-dom";
-import { useProduct } from '../../../context/ProductContext';
 import ViewProduct from './ViewProduct';
-
+import { useDispatch,useSelector } from 'react-redux';
+import {fetchProductDetail} from '../../../store/productDetailSlice'
 
 const ProductPage = () => {
+const dispatch = useDispatch();
+const {product,isLoaded} = useSelector((state) => state.productDetail)
 
 const { productId } = useParams();
-const { fetchProduct, product, isLoaded } = useProduct();
 useEffect(() => {
-    fetchProduct(productId);
+  dispatch(fetchProductDetail(productId))
 }, []);
-// console.log(products);
-// console.log('productId', productId);
   return (
     <div>
        <Container maxWidth="xl" className="App">
