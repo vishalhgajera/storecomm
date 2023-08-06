@@ -18,8 +18,7 @@ const AuthProvider = ({ children }) => {
    localStorage.setItem('accessToken', JSON.stringify(token));
   setAccessToken(token)
   }
-
-
+  
   return (
     <AuthContext.Provider
       value={{accessToken , setAccessToken:tokenHandler}}

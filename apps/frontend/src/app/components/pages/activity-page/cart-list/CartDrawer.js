@@ -8,10 +8,10 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { Box, Button, ButtonGroup } from '@mui/joy';
 import { useEffect } from 'react';
-import ActivityCard from '../../../blocks/cards/activity-card/ActivityCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCartData, updateCart } from '../../../../store/cartSlice';
 import { Link } from 'react-router-dom';
+import CartItemCard from './CartItemCard';
 
 export default function CartDrawer() {
     const anchor = 'right';
@@ -57,7 +57,7 @@ export default function CartDrawer() {
                 {isLoaded &&
                 cartItems.map((item) => (
                     <Box sx={{m:1}} key={item.product._id}>
-                      <ActivityCard item={item} />
+                      <CartItemCard item={item} />
                     </Box>
                 ))}
             </Sheet>
