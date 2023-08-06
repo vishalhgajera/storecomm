@@ -1,35 +1,43 @@
 import * as React from 'react';
-import AspectRatio from '@mui/joy/AspectRatio';
 import Card from '@mui/joy/Card';
 import CardContent from '@mui/joy/CardContent';
-import CardOverflow from '@mui/joy/CardOverflow';
 import Typography from '@mui/joy/Typography';
+import { CardOverflow, IconButton } from '@mui/joy';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 export default function RowCard() {
   return (
-    <Card orientation="horizontal" variant="outlined" sx={{ width: 260 }}>
-      <CardOverflow>
-        <AspectRatio ratio="1" sx={{ width: 90 }}>
-          <img
-            src="https://images.unsplash.com/photo-1507833423370-a126b89d394b?auto=format&fit=crop&w=90"
-            srcSet="https://images.unsplash.com/photo-1507833423370-a126b89d394b?auto=format&fit=crop&w=90&dpr=2 2x"
-            loading="lazy"
-            alt=""
-          />
-        </AspectRatio>
-      </CardOverflow>
+    <Card orientation="horizontal" variant="outlined" sx={{ width: "100%",mb:1 }}>
       <CardContent>
         <Typography fontWeight="md" textColor="success.plainColor" mb={0.5}>
-          Yosemite Park
+          Order Id
         </Typography>
-        <Typography level="body-sm">California, USA</Typography>
+        <Typography level="body-sm">#O453221</Typography>
+      </CardContent>
+      <CardContent>
+        <Typography fontWeight="md" textColor="success.plainColor" mb={0.5}>
+          Order Status
+        </Typography>
+        <Typography level="body-sm">Delhivery</Typography>
+      </CardContent>
+      <CardContent>
+        <Typography fontWeight="md" textColor="success.plainColor" mb={0.5}>
+          Order Date
+        </Typography>
+        <Typography level="body-sm">03/11/2020</Typography>
+      </CardContent>
+      <CardContent>
+        <Typography fontWeight="md" textColor="success.plainColor" mb={0.5}>
+          Total Price
+        </Typography>
+        <Typography level="body-sm">4935 Rs</Typography>
       </CardContent>
       <CardOverflow
         variant="soft"
         color="primary"
         sx={{
-          px: 0.2,
-          writingMode: 'vertical-rl',
+          px: 0.3,
+          // writingMode: 'vertical-rl',
           textAlign: 'center',
           fontSize: 'xs',
           fontWeight: 'xl',
@@ -39,7 +47,12 @@ export default function RowCard() {
           borderColor: 'divider',
         }}
       >
-        Ticket
+
+      <CardContent>
+        <IconButton variant="plain">
+            <ArrowForwardIcon />
+        </IconButton>
+      </CardContent>
       </CardOverflow>
     </Card>
   );

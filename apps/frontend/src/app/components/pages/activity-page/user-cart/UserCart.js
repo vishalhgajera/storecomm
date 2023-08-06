@@ -4,7 +4,7 @@ import { Box } from '@mui/material';
 import ActivityCard from '../../../blocks/cards/activity-card/ActivityCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCartData, updateCart } from '../../../../store/cartSlice';
-import CheckoutCard from '../../../blocks/cards/activity-card/checkoutCard';
+import CheckoutCard from '../../../blocks/cards/activity-card/CheckoutCard';
 
 const UserCart = () => {
 

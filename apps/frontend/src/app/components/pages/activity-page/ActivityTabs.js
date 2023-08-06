@@ -9,8 +9,8 @@ import BasicCard from '../../blocks/cards/category-card/BasicCard';
 import AddressCard from '../../blocks/cards/category-card/AddressCard';
 import { Divider } from '@mui/joy';
 import CreditCardForm from '../../blocks/cards/category-card/CreditCardForm';
-import InteractiveCard from '../../blocks/cards/category-card/InteractiveCard';
 import RowCard from '../../blocks/cards/category-card/RowCard';
+import ViewCard from '../../blocks/cards/activity-card/ViewCard';
 
 const ActivityTabs = () => {
   return (
@@ -35,7 +35,7 @@ const ActivityTabs = () => {
         <BasicCard/>
       </TabPanel>
       <TabPanel sx={{ p: 2, minHeight: 200 }} value={2}>
-        <InteractiveCard/>
+        <RowCard/>
         <RowCard/>
       </TabPanel>
       <TabPanel sx={{ p: 2, minHeight: 200 }} value={3}>

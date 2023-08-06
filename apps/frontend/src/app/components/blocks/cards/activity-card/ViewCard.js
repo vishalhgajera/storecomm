@@ -13,7 +13,7 @@ import { Box, ButtonGroup, IconButton } from '@mui/joy';
 import { fetchUpdateCartData } from '../../../../store/cartSlice'; 
 
 
-export default function ActivityCard(props) {
+export default function ViewCard(props) {
   const dispatch = useDispatch();
   let item = !props.item.product ? {} : props.item.product;
   const cartItems = useSelector((state) => state.cart.cartItems); // Access the cart state using useSelector
@@ -26,7 +26,7 @@ export default function ActivityCard(props) {
   return (
       <Card
       orientation="horizontal"
-      variant="outlined" 
+      // variant="outlined" 
       sx={{ width: "100%", alignItems: "center" }} >
         <AspectRatio ratio="1" sx={{ minWidth: 100, borderRadius: '0' }}>
           <img
@@ -87,7 +87,6 @@ export default function ActivityCard(props) {
           textTransform: 'uppercase',
           borderLeft: '1px solid',
           borderColor: 'divider',
-          ml:"auto"
         }}
       >
           <IconButton sx={{ borderRadius: '50%' }} variant="plain" size="sm" color="danger" onClick={e=>cartHandler(item,0)}>
