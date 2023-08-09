@@ -11,7 +11,8 @@ import bodyParser from 'body-parser';
 import connectDB from './db.js';
 import authRoutes from './routes/authRoutes.js';
 import productRoutes from './routes/productRoutes.js';
-import userCartRoutes from './routes/cartRoutes.js';
+import cartRoutes from './routes/cartRoutes.js';
+import addressRoutes from './routes/addressRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
 import dotenv from 'dotenv';
 
@@ -29,7 +30,8 @@ app.use(cors());
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/product', productRoutes);
-app.use('/api/cart', userCartRoutes);
+app.use('/api/cart', cartRoutes);
+app.use('/api/address', addressRoutes);
 app.use('/api/order', orderRoutes);
 
 app.use('/assets', express.static(path.join(__dirname, 'assets')));

@@ -7,10 +7,10 @@ export const cartList = async (req, res) => {
     if (!user) {
         return res.status(404).json({ message: 'User not found' });
     }
-    res.status(200).json({ cart: user.cart });
+    return res.status(200).json({ cart: user.cart });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
+    return res.status(500).json({ message: 'Internal server error' });
   }
 };
 
@@ -49,10 +49,10 @@ export const addToCart = async (req, res) => {
         return res.status(404).json({ message: 'User not found' });
       }
   
-      res.status(200).json({ cart: updatedUser.cart });
+      return res.status(200).json({ cart: updatedUser.cart });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ message: 'Internal server error' });
+      return res.status(500).json({ message: 'Internal server error' });
     }
   };
 
@@ -96,6 +96,6 @@ export const addToCart = async (req, res) => {
       }
     } catch (error) {
       console.error(error);
-      res.status(500).json({ message: 'Internal server error' });
+      return res.status(500).json({ message: 'Internal server error' });
     }
   };
