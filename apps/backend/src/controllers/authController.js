@@ -26,10 +26,10 @@ export const signup = async (req, res) => {
     const token = jwt.sign({ userId: newUser._id }, SECRET_KEY ); // Replace 'your_secret_key' with a strong secret
 
     // Return the token
-    res.json({ token, user:{name:newUser.name} });
+    return res.json({ token, user:{name:newUser.name} });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Server error' });
+    return res.status(500).json({ error: 'Server error' });
   }
 };
 
@@ -53,9 +53,9 @@ export const login = async (req, res) => {
     const token = jwt.sign({ userId: user._id }, SECRET_KEY ); // Replace 'your_secret_key' with the same secret used during signup
 
     // Return the token
-    res.json({ token, user:{name:user.name} });
+    return res.json({ token, user:{name:user.name} });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Server error' });
+    return res.status(500).json({ error: 'Server error' });
   }
 };

@@ -43,6 +43,7 @@ const authSlice = createSlice({
   },
   reducers: {
     logout: (state) => {
+      localStorage.removeItem('accessToken');
       state.accessToken = null;
     },
   },

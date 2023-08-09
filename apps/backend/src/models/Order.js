@@ -50,6 +50,10 @@ const orderSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  contactNumber: {
+    type: String,
+    required: true
+  },
   paymentType: {
     type: String,
     required: true

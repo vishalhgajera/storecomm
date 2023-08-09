@@ -25,7 +25,7 @@ export default function PaymentForm() {
         <List
           component="div"
           variant="outlined"
-          orientation="verticle"
+          orientation="vertical"
         >
           <ListItem>
             <Box sx={{width: '100%'}}>

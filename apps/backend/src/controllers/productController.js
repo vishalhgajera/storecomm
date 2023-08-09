@@ -8,18 +8,18 @@ export const allProducts = async (req, res) => {
         .skip(req.query.offset)
         .limit(req.query.record);
 
-      res.json({ product });
+        return res.json({ product });
 
     } else {
 
       const product = await Product.find();
-      res.json({ product });
+      return res.json({ product });
 
     }
     // Retrieve user data from the database and send it back to the client
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Server error' });
+    return res.status(500).json({ message: 'Server error' });
   }
 };
 
