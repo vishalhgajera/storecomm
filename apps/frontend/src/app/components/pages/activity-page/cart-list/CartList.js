@@ -2,14 +2,14 @@ import React, { useEffect } from 'react';
 import Grid from '@mui/material/Unstable_Grid2/Grid2';
 import { Box } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCartData, updateCart } from '../../../../store/cartSlice';
+import { fetchCartData } from '../../../../store/cartSlice';
 import CheckoutCard from './CheckoutCard';
 import CartItemCard from './CartItemCard';
 
 const CartList = () => {
 
   const dispatch = useDispatch();
-  const { cartItems, isLoaded, error } = useSelector((state) => state.cart);
+  const { cartItems, isLoaded } = useSelector((state) => state.cart);
 
   useEffect(() => {
     dispatch(fetchCartData());

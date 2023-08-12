@@ -21,6 +21,7 @@ import TypeJoy from '@mui/joy/Typography';
 
 import {logout} from '../../../store/authSlice'
 import { useDispatch } from 'react-redux';
+// import { LinearProgress } from '@mui/joy';
 
 const pages = ['Home', 'Shop','Activity','Checkout'];
 const settings = ['Profile','Activity'];
@@ -96,177 +97,180 @@ export default function Navbar(prop) {
   };
 
   return (
+
     <Sheet sx={{
       boxShadow: 'sm',
       top: 0,
       position: 'sticky',
       zIndex: 5,
       width: '100%',
+      backdropFilter: "blur(8px)",
     }}>
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          <StoreIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-            <Typography
-              variant="h6"
-              noWrap
-              component="span"
-              sx={{
-                mr: 2,
-                display: { xs: 'none', md: 'flex' },
-                fontFamily: 'monospace',
-                fontWeight: 700,
-                letterSpacing: '.3rem',
-                color: 'inherit',
-                textDecoration: 'none',
-              }}
-            >
-              ShopEcomm
-            </Typography>
-          <Sheet sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: 'block', md: 'none' },
-              }}
-            >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Sheet>
-
-          <StoreIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href=""
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            LOGO
-          </Typography>
-          <Sheet
-            sx={{
-              flexGrow: 1,
-              display: { xs: 'none', md: 'flex' },
-              justifyContent: 'center',
-            }}
-          >
-
-            {pages.map((page) => (
-              <Button key={page}>
-                <Link
-                  to={page === 'Home' ? '/' : page}
-                  style={{
-                    my: 2,
-                    display: 'block',
-                    textDecoration: 'none',
-                  }}
-                >
-                <TypeJoy level="body1"> {page} </TypeJoy>
-                </Link>
-              </Button>
-            ))}
-            
-          </Sheet>
-          <Sheet sx={{ flexGrow: 1, justifyContent: 'center', pr: 5 }}>
-            <Search>
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <StyledInputBase
-                placeholder="Search…"
-                inputProps={{ 'aria-label': 'search' }}
-              />
-            </Search>
-          </Sheet>
-          <Sheet sx={{ flexGrow: 0, display: { xs: 'none', md: 'flex' } }}>
-             <ModeToggle></ModeToggle>
-             <CartDrawer/>
-            <Tooltip title={`Hello ${user.name}`} >
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0,mx: 2}}>
-                <Avatar alt={user.name} src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                <Link
-                  to={setting}
-                  style={{
-                    color: 'inherit',
-                    textDecoration: 'none',
-                  }}
-                >
-                <Typography textAlign="center">{setting}</Typography>
-                </Link>
-
-                </MenuItem>
-              ))}
-              <MenuItem >
-                <Link
-                  to='/login'
-                  onClick={logoutHandler}
-                  style={{
-                    color: 'inherit',
-                    textDecoration: 'none',
-                  }}
-                ><Typography textAlign="center"> Logout</Typography>
-                </Link>
-              </MenuItem>
-            </Menu>
-          </Sheet>
-        </Toolbar>
-      </Container>
-    </Sheet>
+       {/* <LinearProgress thickness={1} /> */}
+       <Container maxWidth="xl">
+         <Toolbar disableGutters>
+           <StoreIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+             <Typography
+               variant="h6"
+               noWrap
+               component="span"
+               sx={{
+                 mr: 2,
+                 display: { xs: 'none', md: 'flex' },
+                 fontFamily: 'monospace',
+                 fontWeight: 700,
+                 letterSpacing: '.3rem',
+                 color: 'inherit',
+                 textDecoration: 'none',
+               }}
+             >
+               ShopEcomm
+             </Typography>
+           <Sheet sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+             <IconButton
+               size="large"
+               aria-label="account of current user"
+               aria-controls="menu-appbar"
+               aria-haspopup="true"
+               onClick={handleOpenNavMenu}
+               color="inherit"
+             >
+               <MenuIcon />
+             </IconButton>
+  
+             <Menu
+               id="menu-appbar"
+               anchorEl={anchorElNav}
+               anchorOrigin={{
+                 vertical: 'bottom',
+                 horizontal: 'left',
+               }}
+               keepMounted
+               transformOrigin={{
+                 vertical: 'top',
+                 horizontal: 'left',
+               }}
+               open={Boolean(anchorElNav)}
+               onClose={handleCloseNavMenu}
+               sx={{
+                 display: { xs: 'block', md: 'none' },
+               }}
+             >
+               {pages.map((page) => (
+                 <MenuItem key={page} onClick={handleCloseNavMenu}>
+                   <Typography textAlign="center">{page}</Typography>
+                 </MenuItem>
+               ))}
+             </Menu>
+           </Sheet>
+  
+           <StoreIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+           <Typography
+             variant="h5"
+             noWrap
+             component="a"
+             href=""
+             sx={{
+               mr: 2,
+               display: { xs: 'flex', md: 'none' },
+               flexGrow: 1,
+               fontFamily: 'monospace',
+               fontWeight: 700,
+               letterSpacing: '.3rem',
+               color: 'inherit',
+               textDecoration: 'none',
+             }}
+           >
+             LOGO
+           </Typography>
+           <Sheet
+             sx={{
+               flexGrow: 1,
+               display: { xs: 'none', md: 'flex' },
+               justifyContent: 'center',
+             }}
+           >
+  
+             {pages.map((page) => (
+               <Button key={page}>
+                 <Link
+                   to={page === 'Home' ? '/' : page}
+                   style={{
+                     my: 2,
+                     display: 'block',
+                     textDecoration: 'none',
+                   }}
+                 >
+                 <TypeJoy level="body1"> {page} </TypeJoy>
+                 </Link>
+               </Button>
+             ))}
+             
+           </Sheet>
+           <Sheet sx={{ flexGrow: 1, justifyContent: 'center', pr: 5 }}>
+             <Search>
+               <SearchIconWrapper>
+                 <SearchIcon />
+               </SearchIconWrapper>
+               <StyledInputBase
+                 placeholder="Search…"
+                 inputProps={{ 'aria-label': 'search' }}
+               />
+             </Search>
+           </Sheet>
+           <Sheet sx={{ flexGrow: 0, display: { xs: 'none', md: 'flex' } }}>
+              <ModeToggle></ModeToggle>
+              <CartDrawer/>
+             <Tooltip title={`Hello ${user.name}`} >
+               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0,mx: 2}}>
+                 <Avatar alt={user.name} src="/static/images/avatar/2.jpg" />
+               </IconButton>
+             </Tooltip>
+             <Menu
+               sx={{ mt: '45px' }}
+               id="menu-appbar"
+               anchorEl={anchorElUser}
+               anchorOrigin={{
+                 vertical: 'top',
+                 horizontal: 'right',
+               }}
+               keepMounted
+               transformOrigin={{
+                 vertical: 'top',
+                 horizontal: 'right',
+               }}
+               open={Boolean(anchorElUser)}
+               onClose={handleCloseUserMenu}
+             >
+               {settings.map((setting) => (
+                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                 <Link
+                   to={setting}
+                   style={{
+                     color: 'inherit',
+                     textDecoration: 'none',
+                   }}
+                 >
+                 <Typography textAlign="center">{setting}</Typography>
+                 </Link>
+  
+                 </MenuItem>
+               ))}
+               <MenuItem >
+                 <Link
+                   to='/login'
+                   onClick={logoutHandler}
+                   style={{
+                     color: 'inherit',
+                     textDecoration: 'none',
+                   }}
+                 ><Typography textAlign="center"> Logout</Typography>
+                 </Link>
+               </MenuItem>
+             </Menu>
+           </Sheet>
+         </Toolbar>
+       </Container>
+     </Sheet>
   );
 }

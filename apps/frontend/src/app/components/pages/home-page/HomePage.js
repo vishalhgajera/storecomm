@@ -1,6 +1,6 @@
 import {Box, Container, CssBaseline } from '@mui/material'
 import React from 'react'
-import Banner from './banner'
+import Banner from './Banner'
 
 
 
