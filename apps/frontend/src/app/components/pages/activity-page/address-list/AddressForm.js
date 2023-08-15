@@ -10,8 +10,25 @@ import Input from '@mui/joy/Input';
 import Typography from '@mui/joy/Typography';
 import Button from '@mui/joy/Button';
 import InfoOutlined from '@mui/icons-material/InfoOutlined';
+import { updateAddressList } from '../../../../store/addressSlice';
+import { useDispatch } from 'react-redux';
 
-export default function AddressCard() {
+export default function AddressForm(props) {
+  const dispatch = useDispatch();
+  const {setOpen} = props.data;
+  const title = props.data.title || "Add New Address";
+  const data = props.data.data || {firstName:'',lastName:'',contactNo:'',address1:'',address2:'',zip:'',state:'',city:'',country:''}
+  const submitHandler = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const formDataObject = Object.fromEntries(formData);
+    if(data._id){
+      formDataObject._id = data._id;
+    }
+    dispatch(updateAddressList(formDataObject));
+    setOpen(false);
+  }
+
   return (
     <Card
       variant="outlined"
@@ -25,10 +42,12 @@ export default function AddressCard() {
       }}
     >
       <Typography level="title-lg" startDecorator={<InfoOutlined />}>
-        Add new Address
+       {title}
       </Typography>
       <Divider inset="none" />
       <CardContent
+       component="form"
+       onSubmit={submitHandler}
         sx={{
           display: 'grid',
           gridTemplateColumns: 'repeat(2, minmax(80px, 1fr))',
@@ -40,6 +59,7 @@ export default function AddressCard() {
           <Input 
             id="firstName"
             name="firstName"
+            defaultValue={data.firstName}
             autoComplete="given-name" />
         </FormControl>
 
@@ -48,15 +68,28 @@ export default function AddressCard() {
           <Input
             id="lastName"
             name="lastName"
+            defaultValue={data.lastName}
             autoComplete="family-name" />
         </FormControl>
 
+        <FormControl  sx={{ gridColumn: '1/-1' }} required>
+          <FormLabel>Contact Number</FormLabel>
+          <Input 
+            id="contacteNo"
+            name="contactNo"
+            type="tel"
+            defaultValue={data.contactNo}
+            required
+            autoComplete="tel" />
+        </FormControl>
+        <Divider inset="none"  sx={{ gridColumn: '1/-1' ,mt:1}} />
         <FormControl sx={{ gridColumn: '1/-1' }}  required>
           <FormLabel>Address line 1</FormLabel>
           <Input 
             id="address1"
             name="address1"
             autoComplete="shipping address-line1"
+            defaultValue={data.address1}
             />
         </FormControl>
 
@@ -66,6 +99,7 @@ export default function AddressCard() {
             id="address2"
             name="address2"
             autoComplete="shipping address-line2"
+            defaultValue={data.address2}
             />
         </FormControl>
 
@@ -74,6 +108,7 @@ export default function AddressCard() {
           <Input 
             id="city"
             name="city"
+            defaultValue={data.city}
             autoComplete="shipping address-level2" />
         </FormControl>
 
@@ -82,6 +117,7 @@ export default function AddressCard() {
           <Input
             id="state"
             name="state"
+            defaultValue={data.state}
             label="State/Province/Region"/>
         </FormControl>
 
@@ -91,6 +127,7 @@ export default function AddressCard() {
           <Input 
            id="zip"
            name="zip"
+           defaultValue={data.zip}
            autoComplete="shipping postal-code" />
         </FormControl>
 
@@ -99,11 +136,12 @@ export default function AddressCard() {
           <Input
             id="country"
             name="country"
+            defaultValue={data.country}
             autoComplete="shipping country"/>
         </FormControl>
         <Checkbox label="Use this address for payment details" sx={{ gridColumn: '1/-1', my: 1 }} />
         <CardActions sx={{ gridColumn: '1/-1' }}>
-          <Button variant="solid" color="primary">
+          <Button variant="solid" color="primary" type='submit'>
             Submit
           </Button>
         </CardActions>

@@ -6,7 +6,6 @@ import TabPanel from '@mui/joy/TabPanel';
 import CartList from './cart-list/CartList';
 import ProfileCard from './user-profile/ProfileCard';
 import BasicCard from '../../blocks/cards/BasicCard';
-import AddressCard from '../../blocks/cards/AddressCard';
 import { Divider, ListItemDecorator, Typography } from '@mui/joy';
 import CreditCardForm from '../../blocks/cards/CreditCardForm';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
@@ -16,6 +15,8 @@ import ContactsIcon from '@mui/icons-material/Contacts';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import OrderList from './order-list/OrderList';
+import AddressList from './address-list/AddressList';
+import AddressCard from './address-list/AddressCard';
 
 const ActivityTabs = () => {
   return (
@@ -56,7 +57,7 @@ const ActivityTabs = () => {
       <TabPanel sx={{ p: 2, minHeight: 200 }} value={4}>
       <Typography level="h4" startDecorator={<ContactsIcon />} mb={1}>Address</Typography>
       <Divider sx={{ mb:2 }}/>
-        <AddressCard/>
+        <AddressList/>
       </TabPanel>
       <TabPanel sx={{ p: 2, minHeight: 200 }} value={5} >
       <Typography level="h4" startDecorator={<CreditCardIcon />} mb={1}>Cards</Typography>

@@ -1,8 +1,7 @@
 import {Box, Container, CssBaseline } from '@mui/material'
 import React from 'react'
-import Banner from './banner'
-
-
+import Banner from './Banner'
+import AddressList from '../activity-page/address-list/AddressList'
 
 function HomePage() {
   return (
@@ -10,6 +9,7 @@ function HomePage() {
       <CssBaseline />
       <Container  maxWidth="xl">
         <Banner/>
+        <AddressList/>
       </Container>
     </Box>
   )
