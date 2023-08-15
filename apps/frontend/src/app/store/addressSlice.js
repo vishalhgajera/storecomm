@@ -2,9 +2,8 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axiosInstance from '../api/axiosInstance';
 
 // Async Thunk for fetching address data
-export const fetchAddress = createAsyncThunk('address/fetchAddress', async (_, thunkAPI) => {
+export const fetchAddressList = createAsyncThunk('address/fetchAddressList', async (_, thunkAPI) => {
   try {
-    console.log();
     const response = await axiosInstance.get('/address/all');
     return response.data.address;
   } catch (error) {
@@ -14,36 +13,21 @@ export const fetchAddress = createAsyncThunk('address/fetchAddress', async (_, t
 });
 
 // Async Thunk for adding new address
-export const addAddress = createAsyncThunk('address/addAddress', async (_, thunkAPI) => {
+export const updateAddressList = createAsyncThunk('address/addAddress', async (data, thunkAPI) => {
   try {
-    const response = await axiosInstance.post('/address/');
+    const response = await axiosInstance.post('/address/', data);
     return response.data.address;
   } catch (error) {
     console.error(error);
     throw error;
   }
 });
-
-// Async Thunk for updating address data
-export const updateAddress = createAsyncThunk(
-  'address/updateAddress',
-  async ({ addressId }, thunkAPI) => {
-    try {
-      await axiosInstance.put(`/address/${addressId}`);
-      return { addressId };
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
-  }
-);
-
 // Async Thunk for deleting address data
 export const deleteAddress = createAsyncThunk(
   'address/deleteAddress',
-  async ({ addressId }, thunkAPI) => {
+  async (addressId, thunkAPI) => {
     try {
-      await axiosInstance.delete(`/address/${addressId}`);
+      await axiosInstance.delete(`/address/${addressId}`,null);
       return { addressId };
     } catch (error) {
       console.error(error);
@@ -62,44 +46,30 @@ const addressSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchAddress.pending, (state) => {
+      .addCase(fetchAddressList.pending, (state) => {
         state.isLoaded = false;
         state.error = null;
       })
-      .addCase(fetchAddress.fulfilled, (state, action) => {
+      .addCase(fetchAddressList.fulfilled, (state, action) => {
         state.isLoaded = true;
         state.addressList = action.payload;
         state.error = null;
       })
-      .addCase(fetchAddress.rejected, (state, action) => {
+      .addCase(fetchAddressList.rejected, (state, action) => {
         state.isLoaded = true;
         state.addressList = [];
         state.error = action.payload;
       })
-      .addCase(addAddress.pending, (state) => {
+      .addCase(updateAddressList.pending, (state) => {
         state.isLoaded = false;
         state.error = null;
       })
-      .addCase(addAddress.fulfilled, (state, action) => {
+      .addCase(updateAddressList.fulfilled, (state, action) => {
         state.isLoaded = true;
         state.addressList = action.payload;
         state.error = null;
       })
-      .addCase(addAddress.rejected, (state, action) => {
-        state.isLoaded = true;
-        state.addressList = [];
-        state.error = action.payload;
-      })
-      .addCase(updateAddress.pending, (state) => {
-        state.isLoaded = false;
-        state.error = null;
-      })
-      .addCase(updateAddress.fulfilled, (state, action) => {
-        state.isLoaded = true;
-        state.addressList = action.payload;
-        state.error = null;
-      })
-      .addCase(updateAddress.rejected, (state, action) => {
+      .addCase(updateAddressList.rejected, (state, action) => {
         state.isLoaded = true;
         state.addressList = [];
         state.error = action.payload;
@@ -110,7 +80,11 @@ const addressSlice = createSlice({
       })
       .addCase(deleteAddress.fulfilled, (state, action) => {
         state.isLoaded = true;
-        state.addressList = action.payload;
+        const { addressId } = action.payload;
+        const findById = state.addressList.findIndex((e) => e._id === addressId);
+        if (findById > -1) {
+          state.addressList.splice(findById,1)
+        }
         state.error = null;
       })
       .addCase(deleteAddress.rejected, (state, action) => {

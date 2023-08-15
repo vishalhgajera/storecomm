@@ -38,18 +38,8 @@ const cartSlice = createSlice({
     error: null,
   },
   reducers: {
-    updateCartItem: (state, action) => {
-      const { product, qty } = action.payload;
-      const newCartItems = [...state.cartItems];
-      const findById = newCartItems.findIndex((e) => e.product._id === product._id);
-      if (findById > -1) {
-        newCartItems.map((e) => (e.product._id === product._id ? (e.qty = qty) : e));
-        state.cartItems = newCartItems.filter((e) => e.qty > 0);
-      } else {
-        newCartItems.push({ product, qty });
-        state.cartItems = newCartItems;
-      }
-    },
+    // updateCartItem: (state, action) => {
+    // },
   },
   extraReducers: (builder) => {
     builder
@@ -72,7 +62,7 @@ const cartSlice = createSlice({
       })
       .addCase(fetchUpdateCartData.fulfilled, (state, action) => {
         const { product, qty } = action.payload;
-        const newCartItems = [...state.cartItems];
+        const newCartItems = state.cartItems;
         const findById = newCartItems.findIndex((e) => e.product._id === product._id);
         if (findById > -1) {
           newCartItems.map((e) => (e.product._id === product._id ? (e.qty = qty) : e));
@@ -88,5 +78,5 @@ const cartSlice = createSlice({
   },
 });
 
-export const { updateCartItem } = cartSlice.actions;
+// export const { updateCartItem } = cartSlice.actions;
 export default cartSlice.reducer;
