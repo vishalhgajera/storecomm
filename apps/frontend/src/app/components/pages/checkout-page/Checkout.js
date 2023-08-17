@@ -1,27 +1,27 @@
 import * as React from 'react';
-import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/joy/Box';
-import Container from '@mui/material/Container';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Typography from '@mui/joy/Typography';
-import AddressForm from './AddressForm';
 import PaymentForm from './PaymentForm';
 import Review from './Review';
 import { Sheet } from '@mui/joy';
+import AddressDetails from '../activity-page/address-list/AddressDetails';
+import CartList from '../activity-page/cart-list/CartList';
 
-
-const steps = ['Shipping address', 'Payment details', 'Review your order'];
+const steps = ['Cart Items','Shipping address', 'Payment details', 'Review your order'];
 
 function getStepContent(step) {
   switch (step) {
     case 0:
-      return <AddressForm />;
+      return <CartList />; 
     case 1:
-      return <PaymentForm />;
+      return <AddressDetails />;
     case 2:
+      return <PaymentForm />;
+    case 3:
       return <Review />;
     default:
       throw new Error('Unknown step');

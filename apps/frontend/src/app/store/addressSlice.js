@@ -36,6 +36,19 @@ export const deleteAddress = createAsyncThunk(
   }
 );
 
+export const primaryAddress = createAsyncThunk(
+  'address/primaryAddress',
+  async (addressId, thunkAPI) => {
+    try {
+      const response = await axiosInstance.put(`/address/${addressId}`,null);
+      return response.data.address ;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+);
+
 const addressSlice = createSlice({
   name: 'address',
   initialState: {
@@ -88,6 +101,20 @@ const addressSlice = createSlice({
         state.error = null;
       })
       .addCase(deleteAddress.rejected, (state, action) => {
+        state.isLoaded = true;
+        state.addressList = [];
+        state.error = action.payload;
+      })
+      .addCase(primaryAddress.pending, (state) => {
+        state.isLoaded = false;
+        state.error = null;
+      })
+      .addCase(primaryAddress.fulfilled, (state, action) => {
+        state.isLoaded = true;
+        state.addressList = action.payload;
+        state.error = null;
+      })
+      .addCase(primaryAddress.rejected, (state, action) => {
         state.isLoaded = true;
         state.addressList = [];
         state.error = action.payload;
