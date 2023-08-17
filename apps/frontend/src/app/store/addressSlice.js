@@ -74,7 +74,7 @@ const addressSlice = createSlice({
         state.error = action.payload;
       })
       .addCase(updateAddressList.pending, (state) => {
-        state.isLoaded = false;
+        // state.isLoaded = false;
         state.error = null;
       })
       .addCase(updateAddressList.fulfilled, (state, action) => {
@@ -88,11 +88,9 @@ const addressSlice = createSlice({
         state.error = action.payload;
       })
       .addCase(deleteAddress.pending, (state) => {
-        state.isLoaded = false;
         state.error = null;
       })
       .addCase(deleteAddress.fulfilled, (state, action) => {
-        state.isLoaded = true;
         const { addressId } = action.payload;
         const findById = state.addressList.findIndex((e) => e._id === addressId);
         if (findById > -1) {
@@ -101,21 +99,17 @@ const addressSlice = createSlice({
         state.error = null;
       })
       .addCase(deleteAddress.rejected, (state, action) => {
-        state.isLoaded = true;
         state.addressList = [];
         state.error = action.payload;
       })
       .addCase(primaryAddress.pending, (state) => {
-        state.isLoaded = false;
         state.error = null;
       })
       .addCase(primaryAddress.fulfilled, (state, action) => {
-        state.isLoaded = true;
         state.addressList = action.payload;
         state.error = null;
       })
       .addCase(primaryAddress.rejected, (state, action) => {
-        state.isLoaded = true;
         state.addressList = [];
         state.error = action.payload;
       });
