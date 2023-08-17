@@ -14,28 +14,6 @@ export const addressList = async (req, res) => {
     return res.status(500).json({ message: 'Internal server error' });
   }
 };
-// export const addNewAddress = async (req, res) => {
-//     try {
-//       const  userId  = req.userId;
-//       const addressDetail = req.body;
-  
-//       const user = await User.findById(userId);
-//       if (!user) {
-//         return res.status(404).json({ message: 'User not found' });
-//       }
-//       // Validate the incoming data
-//       if (!addressDetail) {
-//         return res.status(400).json({ message: ' addressDetail is required in the request query.' });
-//       }else{
-//         user.address.push(addressDetail);
-//         await user.save();
-//         return res.status(200).json({ message: 'Address added successfully', address: user.address });
-//       }
-//     } catch (error) {
-//       console.error(error);
-//       return res.status(500).json({ message: 'Internal server error' });
-//     }
-//   };
   export const updateAddressList = async (req, res) => {
     try {
       const  userId  = req.userId;
@@ -51,7 +29,7 @@ export const addressList = async (req, res) => {
         return res.status(404).json({ message: 'User not found' });
       }
       if (!addressDetail._id){
-        user.address.push(addressDetail);
+        user.address.unshift(addressDetail);
         await user.save();
         return res.status(200).json({ message: 'Address added successfully', address: user.address });
       }
@@ -63,7 +41,7 @@ export const addressList = async (req, res) => {
           // Find the index of the address by addressId in the user's address
           const addressIndex = user.address.findIndex((item) => item._id.toString() === addressDetail._id);
       
-          if (addressIndex !== -1) {
+          if (addressIndex > -1) {
             // If the address exists, update the address
             user.address[addressIndex] = addressDetail;
             await user.save()
@@ -105,3 +83,35 @@ export const addressList = async (req, res) => {
       return res.status(500).json({ message: 'Internal server error' });
     }
   }
+
+  export const primaryAddress = async (req, res) => {
+    try {
+      const userId = req.userId;
+      const { addressId } = req.params;
+  
+      let user = await User.findById(userId);
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+  
+      if (!addressId) {
+        return res.status(400).json({ message: 'addressId is required in the request params.' });
+      }
+  
+      const addressToUpdate = user.address.id(addressId);
+      if (!addressToUpdate) {
+        return res.status(404).json({ message: 'Address not found' });
+      }
+  
+      user.address.forEach((address) => {
+        address.primary = address._id.equals(addressId);
+      });
+  
+      await user.save();
+  
+      return res.status(200).json({ message: 'Address updated successfully', address: user.address });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: 'Internal server error' });
+    }
+  };

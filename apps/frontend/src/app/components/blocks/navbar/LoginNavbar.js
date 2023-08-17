@@ -52,7 +52,7 @@ export default function LoginNavbar() {
               textDecoration: 'none',
             }}
           >
-            ShopEcomm
+            storeComm
           </Typography>
           
           <Sheet sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -110,7 +110,7 @@ export default function LoginNavbar() {
               textDecoration: 'none',
             }}
           >
-            ShopEcomm
+            storeComm
           </Typography>
           <Sheet sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent:'end' } }>
             {pages.map((page) => (

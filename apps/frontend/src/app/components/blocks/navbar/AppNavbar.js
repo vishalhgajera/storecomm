@@ -124,7 +124,7 @@ export default function Navbar(prop) {
                  textDecoration: 'none',
                }}
              >
-               ShopEcomm
+               storeComm
              </Typography>
            <Sheet sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
              <IconButton
