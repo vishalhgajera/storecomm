@@ -10,26 +10,22 @@ import Review from './Review';
 import { Sheet } from '@mui/joy';
 import AddressDetails from '../activity-page/address-list/AddressDetails';
 import CartList from '../activity-page/cart-list/CartList';
+import { usePayment } from '../../../contexts/PaymentContext';
+import { useDispatch } from 'react-redux';
+import { AddOrderData } from '../../../store/orderSlice';
 
-const steps = ['Cart Items','Shipping address', 'Payment details', 'Review your order'];
-
-function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return <CartList />; 
-    case 1:
-      return <AddressDetails />;
-    case 2:
-      return <PaymentForm />;
-    case 3:
-      return <Review />;
-    default:
-      throw new Error('Unknown step');
-  }
-}
 
 export default function Checkout() {
   const [activeStep, setActiveStep] = React.useState(0);
+  const [orderData, setOrderData] = React.useState({});
+  const dispatch = useDispatch(); 
+
+  const steps = ['Cart Items','Shipping address', 'Payment details', 'Review your order'];
+  const payData = usePayment();
+
+  payData.setOrderData = (data) => {
+    setOrderData(data);
+  }
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -38,6 +34,26 @@ export default function Checkout() {
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
+
+  const handlePlaceOrder = () => {
+    dispatch(AddOrderData(orderData))
+    handleNext();
+  }
+  
+  const getStepContent = (step) => {
+    switch (step) {
+      case 0:
+        return <CartList />; 
+      case 1:
+        return <AddressDetails />;
+      case 2:
+        return <PaymentForm  {...payData}/>;
+      case 3:
+        return <Review {...payData}/>;
+      default:
+        throw new Error('Unknown step');
+    }
+  }
 
   return (
         <Sheet variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
@@ -75,14 +91,16 @@ export default function Checkout() {
                     Back
                   </Button>
                 )}
-
-                <Button
+                {activeStep === steps.length - 1 ? <Button
+                  variant="contained"
+                  onClick={handlePlaceOrder}
+                  sx={{ mt: 3, ml: 1 }}
+                >PlaceOrder</Button> 
+                :<Button
                   variant="contained"
                   onClick={handleNext}
                   sx={{ mt: 3, ml: 1 }}
-                >
-                  {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
-                </Button>
+                >Next</Button>}
               </Box>
             </React.Fragment>
           )}

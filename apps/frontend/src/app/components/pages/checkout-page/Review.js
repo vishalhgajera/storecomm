@@ -9,12 +9,12 @@ import { fetchCartData } from '../../../store/cartSlice';
 import { useEffect } from 'react';
 import { fetchAddressList } from '../../../store/addressSlice';
 
-
-export default function Review() {
-
+export default function Review(props) {
+  const {payment,setOrderData} = props
   const dispatch = useDispatch();
   const { cartItems } = useSelector((state) => state.cart);
   const { addressList } = useSelector((state) => state.address);
+  const status = "pending";
 
   useEffect(() => {
     dispatch(fetchAddressList());
@@ -24,17 +24,24 @@ export default function Review() {
     dispatch(fetchCartData());
   }, [dispatch] );
 
-const price = cartItems.reduce((b,a)=>a.product.price*a.qty + b,0);
-const discount = price*10/100;
-const totalPrice = price - discount + 99;
-const address = addressList[0];
 
-const payments = [
-  { name: 'Card type', detail: 'Visa' },
-  { name: 'Card holder', detail: 'Mr John Smith' },
-  { name: 'Card number', detail: 'xxxx-xxxx-xxxx-1234' },
-  { name: 'Expiry date', detail: '04/2024' },
-];
+const orderedProduct = cartItems.map((x) => ({
+  _id: x.product._id,
+  productName: x.product.title,
+  quantity: x.qty,
+  unitPrice: x.product.price,
+  totalPrice: ((x.product.price - x.product.price * (10 / 100))* x.qty).toFixed(2),
+  discount: x.product.price * (10 / 100),
+}));
+
+const totalAmount = orderedProduct.reduce((b,a)=>a.totalPrice + b,0);
+
+const address = addressList.filter((x)=> x.primary)[0];
+const payments = payment || "cod"; //for testing purpose, update needed
+
+useEffect(() => {
+  setOrderData({paymentType:payments,userAddress:address,totalAmount,products:orderedProduct,status});
+}, []);
 
   return (
     <React.Fragment>
@@ -49,9 +56,9 @@ const payments = [
           </ListItem>
         ))}
         <ListItem sx={{ py: 1, px: 0 }}>
-          <ListItemText primary="Total" />
+          <ListItemText primary="Total Amount With discount" />
           <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-          {totalPrice}Rs
+            {totalAmount}Rs 
           </Typography>
         </ListItem>
       </List>
@@ -78,16 +85,7 @@ const payments = [
             Payment details
           </Typography>
           <Grid container>
-            {payments.map((payment) => (
-              <React.Fragment key={payment.name}>
-                <Grid item xs={6}>
-                  <Typography gutterBottom>{payment.name}</Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography gutterBottom>{payment.detail}</Typography>
-                </Grid>
-              </React.Fragment>
-            ))}
+            {payments}
           </Grid>
         </Grid>
       </Grid>

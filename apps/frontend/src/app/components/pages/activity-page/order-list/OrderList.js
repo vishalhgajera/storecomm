@@ -8,8 +8,6 @@ import { Box } from '@mui/joy';
 export default function OrderList() {
     const dispatch = useDispatch();
     const { orderList, isLoaded, error } = useSelector((state) => state.order);
-
-    console.log(orderList);
   
     useEffect(() => {
       dispatch(fetchOrderData());
