@@ -2,61 +2,64 @@ import mongoose from 'mongoose';
 
 // Define the product sub-schema
 const productSchema = new mongoose.Schema({
-  productID: {
-    type: String,
-    required: true
+  _id: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
   },
   productName: {
     type: String,
-    required: false
+    required: true,
   },
   quantity: {
     type: Number,
-    required: true
+    required: true,
   },
   unitPrice: {
     type: Number,
-    required: true
+    required: true,
   },
   totalPrice: {
     type: Number,
-    required: false
+    required: true,
   },
   discount: {
     type: Number,
-    default: 0
-  }
+    required: true,
+  },
 });
 
 // Define the order schema
 const orderSchema = new mongoose.Schema({
+
   customerId: {
-    type: String,
-    required: true
-  },
-  customerName: {
-    type: String,
-    required: true
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
   },
   status: {
     type: String,
+    required: true,
     default: "pending"
+  },
+  userAddress: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+  },
+  paymentType: {
+    type: String,
+    required: true,
+  },
+  totalAmount:{
+    type: Number,
+    required: true,
   },
   orderDate: {
     type: Date,
     default: Date.now
   },
-  userAddress: {
+  orderNumber: {
     type: String,
-    required: true
-  },
-  contactNumber: {
-    type: String,
-    required: true
-  },
-  paymentType: {
-    type: String,
-    required: true
+    required: true,
+    unique: true,
   },
   products: [productSchema]
 });

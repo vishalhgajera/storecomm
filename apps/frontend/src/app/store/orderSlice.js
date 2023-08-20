@@ -14,6 +14,18 @@ export const fetchOrderData = createAsyncThunk('order/fetchOrderData', async (_,
   }
 });
 
+export const AddOrderData = createAsyncThunk('order/AddOrderData', async (data, thunkAPI) => {
+  try {
+    const url = '/order/'; // No need to use the full URL, as it's defined in the Axios instance
+    const response = await axiosInstance.post(url,data);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+});
+
 const orderSlice = createSlice({
   name: 'order',
   initialState: {
@@ -38,6 +50,20 @@ const orderSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchOrderData.rejected, (state, action) => {
+        state.isLoaded = true;
+        state.orderList = [];
+        state.error = action.error.message;
+      })
+      .addCase(AddOrderData.pending, (state) => {
+        // state.isLoaded = false;
+        state.error = null;
+      })
+      .addCase(AddOrderData.fulfilled, (state, action) => {
+        state.isLoaded = true;
+        state.orderList.push(action.payload);
+        state.error = null;
+      })
+      .addCase(AddOrderData.rejected, (state, action) => {
         state.isLoaded = true;
         state.orderList = [];
         state.error = action.error.message;

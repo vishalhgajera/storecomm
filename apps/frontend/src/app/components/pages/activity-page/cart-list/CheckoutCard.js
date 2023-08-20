@@ -11,8 +11,8 @@ export default function CheckoutCard(props) {
 
     const allItem = props.allItem;
     const price = allItem.reduce((b,a)=>a.product.price*a.qty + b,0);
-    const discount = price*10/100;
-    const totalPrice = price - discount + 99;
+    const discount = price*10/100; // suppose 10% discount in all item
+    const totalPrice = price - discount;
 
   return (
     <Card
@@ -30,7 +30,7 @@ export default function CheckoutCard(props) {
         -  Total Discount - {discount} Rs
         </Typography>
         <Typography >
-        + Shipping Charge - 99 Rs
+        + Shipping Charge - 0 Rs
         </Typography>
         <Divider sx={{my:2}}/>
         <Typography fontSize="lg" fontWeight="lg" sx={{mb:2}}>

@@ -5,32 +5,39 @@ import Typography from '@mui/joy/Typography';
 import { CardOverflow, IconButton } from '@mui/joy';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
-export default function OrderCard() {
+export default function OrderCard(props) {
+const {item} = props;
+
+const isoDateString = item.orderDate;
+const date = new Date(isoDateString);
+const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+const formattedDate = date.toLocaleDateString('en-IN', options);
+
   return (
     <Card orientation="horizontal" variant="outlined" sx={{ width: "100%",mb:1 }}>
       <CardContent>
         <Typography fontWeight="md" textColor="success.plainColor" mb={0.5}>
           Order Id
         </Typography>
-        <Typography level="body-sm">#O453221</Typography>
+        <Typography level="body-sm">{item.orderNumber}</Typography>
       </CardContent>
       <CardContent>
         <Typography fontWeight="md" textColor="success.plainColor" mb={0.5}>
           Order Status
         </Typography>
-        <Typography level="body-sm">Delhivery</Typography>
+        <Typography level="body-sm">{item.status}</Typography>
       </CardContent>
       <CardContent>
         <Typography fontWeight="md" textColor="success.plainColor" mb={0.5}>
           Order Date
         </Typography>
-        <Typography level="body-sm">03/11/2020</Typography>
+        <Typography level="body-sm">{formattedDate}</Typography>
       </CardContent>
       <CardContent>
         <Typography fontWeight="md" textColor="success.plainColor" mb={0.5}>
           Total Price
         </Typography>
-        <Typography level="body-sm">4935 Rs</Typography>
+        <Typography level="body-sm">{item.totalAmount} Rs</Typography>
       </CardContent>
       <CardOverflow
         variant="soft"

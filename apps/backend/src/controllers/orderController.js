@@ -1,4 +1,7 @@
+// Order Controller
+
 import Order from '../models/Order';
+import Sequence from '../models/Sequence';
 
 // Get all orders for a specific customer (customerId)
 export const getAllOrders = async (req, res) => {
@@ -42,6 +45,11 @@ export const createNewOrder = async (req, res) => {
     const customerId  = req.userId;
     const orderData = req.body;
     orderData.customerId = customerId;
+    // Generate the order number using the Sequence model
+    const orderNumber = await Sequence.generateOrderNumber();
+    orderData.orderNumber = orderNumber;
+
+
     const newOrder = new Order(orderData);
 
     const savedOrder = await newOrder.save();

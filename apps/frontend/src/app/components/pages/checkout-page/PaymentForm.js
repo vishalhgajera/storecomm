@@ -13,14 +13,18 @@ import InfoOutlined from '@mui/icons-material/InfoOutlined';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
 import { Box, List, ListItem, Radio, RadioGroup } from '@mui/joy';
 
-export default function PaymentForm() {
+
+export default function PaymentForm({payment,setPayment}) {
+
   return (
     <Box>
-      <RadioGroup
+      <RadioGroup 
+        onChange={e=>setPayment(e)}
         aria-labelledby="example-payment-channel-label"
         overlay
         name="example-payment-channel"
-        defaultValue="Paypal"
+        defaultValue="cod"
+        value={payment || "cod"}
       >
         <List
           component="div"
