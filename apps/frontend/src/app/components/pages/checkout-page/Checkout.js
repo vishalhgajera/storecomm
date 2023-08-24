@@ -11,18 +11,19 @@ import { Sheet } from '@mui/joy';
 import AddressDetails from '../activity-page/address-list/AddressDetails';
 import CartList from '../activity-page/cart-list/CartList';
 import { usePayment } from '../../../contexts/PaymentContext';
-import { useDispatch } from 'react-redux';
-import { AddOrderData } from '../../../store/orderSlice';
+import { useDispatch , useSelector} from 'react-redux';
+import { placeOrder } from '../../../store/orderSlice';
+
 
 
 export default function Checkout() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [orderData, setOrderData] = React.useState({});
   const dispatch = useDispatch(); 
-
   const steps = ['Cart Items','Shipping address', 'Payment details', 'Review your order'];
   const payData = usePayment();
-
+  const {latestOrderNumber} = useSelector( (state) => (state.order));
+  console.log(latestOrderNumber);
   payData.setOrderData = (data) => {
     setOrderData(data);
   }
@@ -36,7 +37,7 @@ export default function Checkout() {
   };
 
   const handlePlaceOrder = () => {
-    dispatch(AddOrderData(orderData))
+    dispatch(placeOrder(orderData));
     handleNext();
   }
   
@@ -77,7 +78,7 @@ export default function Checkout() {
                 Thank you for your order.
               </Typography>
               <Typography variant="subtitle1">
-                Your order number is #2001539. We have emailed your order
+                Your order number is {latestOrderNumber}. We have emailed your order
                 confirmation, and will send you an update when your order has
                 shipped.
               </Typography>

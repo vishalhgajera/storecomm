@@ -7,6 +7,7 @@ import ActivityPage from './components/pages/activity-page/ActivityPage';
 import ProductPage from './components/pages/product-page/ProductPage';
 import CheckoutPage from './components/pages/checkout-page/CheckoutPage';
 import ProfilePage from './components/pages/profile-page/ProfilePage';
+import OrderDetailPage from './components/pages/order-detail-page/OrderDetailPage';
 
 export function AppRoutes() {
   return (
@@ -16,6 +17,7 @@ export function AppRoutes() {
       <Route path="/signup" element={<SignupPage />} />
       <Route path="/shop" element={<ShopPage/>} />
       <Route path="/product/:productId" element={<ProductPage />} />
+      <Route path="/order/:orderId" element={<OrderDetailPage />} />
       <Route path="/activity" element={<ActivityPage />} />
       <Route path="/checkout" element={<CheckoutPage />} />
       <Route path="/profile" element={<ProfilePage />} />

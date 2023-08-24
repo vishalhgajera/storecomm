@@ -1,3 +1,5 @@
+// cartSlice
+
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axiosInstance from '../api/axiosInstance'
 
@@ -38,8 +40,11 @@ const cartSlice = createSlice({
     error: null,
   },
   reducers: {
-    // updateCartItem: (state, action) => {
-    // },
+    clearCart: (state, action) => {
+      // Clear the entire cart
+      state.cartItems = [];
+      console.log("cart cleared !");
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -78,5 +83,5 @@ const cartSlice = createSlice({
   },
 });
 
-// export const { updateCartItem } = cartSlice.actions;
+export const { clearCart } = cartSlice.actions;
 export default cartSlice.reducer;

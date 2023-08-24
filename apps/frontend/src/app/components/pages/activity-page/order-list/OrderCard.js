@@ -4,6 +4,7 @@ import CardContent from '@mui/joy/CardContent';
 import Typography from '@mui/joy/Typography';
 import { CardOverflow, IconButton } from '@mui/joy';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { Link } from 'react-router-dom';
 
 export default function OrderCard(props) {
 const {item} = props;
@@ -57,7 +58,9 @@ const formattedDate = date.toLocaleDateString('en-IN', options);
 
       <CardContent>
         <IconButton variant="plain">
+            <Link to={`/order/${item._id}`}>
             <ArrowForwardIcon />
+            </Link>
         </IconButton>
       </CardContent>
       </CardOverflow>
