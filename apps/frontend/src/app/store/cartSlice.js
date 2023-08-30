@@ -68,10 +68,14 @@ const cartSlice = createSlice({
       .addCase(fetchUpdateCartData.fulfilled, (state, action) => {
         const { product, qty } = action.payload;
         const newCartItems = state.cartItems;
-        const findById = newCartItems.findIndex((e) => e.product._id === product._id);
-        if (findById > -1) {
-          newCartItems.map((e) => (e.product._id === product._id ? (e.qty = qty) : e));
-          state.cartItems = newCartItems.filter((e) => e.qty > 0);
+        const findIndexById = newCartItems.findIndex((e) => e.product._id === product._id);
+        if (findIndexById > -1) {
+          if (qty > 0) {
+            newCartItems[findIndexById].qty = qty;
+          }
+          else{
+            newCartItems.splice(findIndexById,1)
+          }
         } else {
           newCartItems.push({ product, qty });
           state.cartItems = newCartItems;

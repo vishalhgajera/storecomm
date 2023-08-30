@@ -6,6 +6,7 @@ import User from '../models/User';
 
 // Get all orders for a specific customer (customerId)
 export const getAllOrders = async (req, res) => {
+  debugger
   try {
     const customerId  = req.userId;
     const orders = await Order.find({ customerId });

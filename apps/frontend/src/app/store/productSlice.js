@@ -36,7 +36,7 @@ const productSlice = createSlice({
       .addCase(fetchProductData.fulfilled, (state, action) => {
         state.isLoaded = true;
         state.allProducts = action.payload;
-        state.productList = state.allProducts.slice(0, 100);
+        state.productList = state.allProducts.slice(0, 20);
         state.error = null;
       })
       .addCase(fetchProductData.rejected, (state, action) => {

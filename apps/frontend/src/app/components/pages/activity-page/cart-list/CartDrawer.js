@@ -20,7 +20,6 @@ export default function CartDrawer() {
     const { cartItems, isLoaded, error } = useSelector((state) => state.cart);
 
     const totalPrice = cartItems.reduce((b,a)=>a.product.price*a.qty + b,0);
-    console.log(totalPrice);
 
     useEffect(() => {
       dispatch(fetchCartData());
