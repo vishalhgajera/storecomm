@@ -2,9 +2,11 @@
 
 import Order from '../models/Order';
 import Sequence from '../models/Sequence';
+import User from '../models/User';
 
 // Get all orders for a specific customer (customerId)
 export const getAllOrders = async (req, res) => {
+  debugger
   try {
     const customerId  = req.userId;
     const orders = await Order.find({ customerId });
@@ -53,6 +55,7 @@ export const createNewOrder = async (req, res) => {
     const newOrder = new Order(orderData);
 
     const savedOrder = await newOrder.save();
+    await User.findByIdAndUpdate(customerId, { cart: [] });
     return res.status(201).json(savedOrder);
   } catch (error) {
     return res.status(400).json({ error: error.message });

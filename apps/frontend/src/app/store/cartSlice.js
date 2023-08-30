@@ -1,3 +1,5 @@
+// cartSlice
+
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axiosInstance from '../api/axiosInstance'
 
@@ -38,8 +40,11 @@ const cartSlice = createSlice({
     error: null,
   },
   reducers: {
-    // updateCartItem: (state, action) => {
-    // },
+    clearCart: (state, action) => {
+      // Clear the entire cart
+      state.cartItems = [];
+      console.log("cart cleared !");
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -63,10 +68,14 @@ const cartSlice = createSlice({
       .addCase(fetchUpdateCartData.fulfilled, (state, action) => {
         const { product, qty } = action.payload;
         const newCartItems = state.cartItems;
-        const findById = newCartItems.findIndex((e) => e.product._id === product._id);
-        if (findById > -1) {
-          newCartItems.map((e) => (e.product._id === product._id ? (e.qty = qty) : e));
-          state.cartItems = newCartItems.filter((e) => e.qty > 0);
+        const findIndexById = newCartItems.findIndex((e) => e.product._id === product._id);
+        if (findIndexById > -1) {
+          if (qty > 0) {
+            newCartItems[findIndexById].qty = qty;
+          }
+          else{
+            newCartItems.splice(findIndexById,1)
+          }
         } else {
           newCartItems.push({ product, qty });
           state.cartItems = newCartItems;
@@ -78,5 +87,5 @@ const cartSlice = createSlice({
   },
 });
 
-// export const { updateCartItem } = cartSlice.actions;
+export const { clearCart } = cartSlice.actions;
 export default cartSlice.reducer;

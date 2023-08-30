@@ -2,6 +2,7 @@ import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import productReducer from './productSlice';
 import cartReducer from './cartSlice';
 import orderReducer from './orderSlice';
+import orderDetailReducer from './orderDetailSlice';
 import addressReducer from './addressSlice';
 import productDetailSlice from './productDetailSlice';
 import authSlice from './authSlice';
@@ -15,6 +16,7 @@ const store = configureStore({
     productDetail:productDetailSlice,
     cart: cartReducer,
     order: orderReducer,
+    orderDetail:orderDetailReducer,
     auth: authSlice
   },
   middleware,

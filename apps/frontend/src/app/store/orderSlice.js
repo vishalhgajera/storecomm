@@ -1,5 +1,8 @@
+// orderSlice
+
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axiosInstance from '../api/axiosInstance'
+import axiosInstance from '../api/axiosInstance';
+import { clearCart } from './cartSlice';
 
 // Async Thunk for fetching cart data
 
@@ -14,10 +17,11 @@ export const fetchOrderData = createAsyncThunk('order/fetchOrderData', async (_,
   }
 });
 
-export const AddOrderData = createAsyncThunk('order/AddOrderData', async (data, thunkAPI) => {
+export const placeOrder = createAsyncThunk('order/placeOrder', async (data, thunkAPI) => {
   try {
     const url = '/order/'; // No need to use the full URL, as it's defined in the Axios instance
     const response = await axiosInstance.post(url,data);
+    thunkAPI.dispatch(clearCart());
     console.log(response.data);
     return response.data;
   } catch (error) {
@@ -32,6 +36,7 @@ const orderSlice = createSlice({
     isLoaded: false,
     orderList: [],
     error: null,
+    latestOrderNumber:"",
   },
   reducers: {
     updateOrderItem: (state, action) => {
@@ -54,16 +59,17 @@ const orderSlice = createSlice({
         state.orderList = [];
         state.error = action.error.message;
       })
-      .addCase(AddOrderData.pending, (state) => {
+      .addCase(placeOrder.pending, (state) => {
         // state.isLoaded = false;
         state.error = null;
       })
-      .addCase(AddOrderData.fulfilled, (state, action) => {
+      .addCase(placeOrder.fulfilled, (state, action) => {
         state.isLoaded = true;
         state.orderList.push(action.payload);
+        state.latestOrderNumber = action.payload.orderNumber;
         state.error = null;
       })
-      .addCase(AddOrderData.rejected, (state, action) => {
+      .addCase(placeOrder.rejected, (state, action) => {
         state.isLoaded = true;
         state.orderList = [];
         state.error = action.error.message;

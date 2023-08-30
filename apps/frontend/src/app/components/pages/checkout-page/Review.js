@@ -30,11 +30,11 @@ const orderedProduct = cartItems.map((x) => ({
   productName: x.product.title,
   quantity: x.qty,
   unitPrice: x.product.price,
-  totalPrice: ((x.product.price - x.product.price * (10 / 100))* x.qty).toFixed(2),
+  totalPrice: (x.product.price - x.product.price * (10 / 100))* x.qty,
   discount: x.product.price * (10 / 100),
 }));
 
-const totalAmount = orderedProduct.reduce((b,a)=>a.totalPrice + b,0);
+const totalAmount = orderedProduct.reduce((b,a)=>a.totalPrice + b,0).toFixed(2);
 
 const address = addressList.filter((x)=> x.primary)[0];
 const payments = payment || "cod"; //for testing purpose, update needed

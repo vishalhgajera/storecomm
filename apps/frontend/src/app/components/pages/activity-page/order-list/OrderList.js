@@ -7,15 +7,15 @@ import { Box } from '@mui/joy';
 
 export default function OrderList() {
     const dispatch = useDispatch();
-    const { orderList, isLoaded, error } = useSelector((state) => state.order);
-  
     useEffect(() => {
       dispatch(fetchOrderData());
     }, [dispatch] );
+    const { orderList, isLoaded, error } = useSelector((state) => state.order);
+    console.log(orderList);
     
   return (
     <div>
-        {isLoaded && orderList.map(item => (
+        {isLoaded && orderList && orderList.map(item => (
             <Box key={item._id}>
                 <OrderCard item={item}></OrderCard>
             </Box>

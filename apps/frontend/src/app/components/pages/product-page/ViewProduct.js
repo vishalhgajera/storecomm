@@ -19,10 +19,10 @@ export default function ViewProduct(props) {
     <div>
         <Box >
           <Grid container spacing={2} sx={{ mt: 2 }}>
-            <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+            <Grid  xs={12} sm={12} md={6} lg={6} xl={6}>
               <PreviewBox image={data.images}></PreviewBox>
             </Grid>
-            <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+            <Grid  xs={12} sm={12} md={6} lg={6} xl={6}>
 
               <Card sx={{
                 // height: "175px", 
