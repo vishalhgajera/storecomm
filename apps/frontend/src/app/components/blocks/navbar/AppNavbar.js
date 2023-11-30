@@ -1,7 +1,4 @@
 import * as React from 'react';
-import { styled, alpha } from '@mui/material/styles';
-import InputBase from '@mui/material/InputBase';
-import SearchIcon from '@mui/icons-material/Search';
 import Sheet from '@mui/joy/Sheet';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
@@ -10,7 +7,6 @@ import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import StoreIcon from '@mui/icons-material/Store';
@@ -23,50 +19,34 @@ import {logout} from '../../../store/authSlice'
 import { useDispatch } from 'react-redux';
 // import { LinearProgress } from '@mui/joy';
 
-const pages = ['Home', 'Shop','Activity','Checkout'];
-const settings = ['Profile','Activity'];
-
-const Search = styled('div')(({ theme }) => ({
-  position: 'relative',
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
+const pages = [
+  {
+    name: 'Home',
+    link: '/',
   },
-  marginLeft: 0,
-  width: '100%',
-  [theme.breakpoints.up('sm')]: {
-    marginLeft: theme.spacing(1),
-    width: 'auto',
+  {
+    name: 'Shop',
+    link: '/shop',
   },
-}));
-
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      width: '12ch',
-      '&:focus': {
-        width: '20ch',
-      },
-    },
+  {
+    name: 'Activity',
+    link: '/activity/order-list',
   },
-}));
+  {
+    name: 'Checkout',
+    link: '/checkout',
+  },
+];
+
+const settings = [{
+  name: 'Profile',
+  link: '/activity/profile',
+},
+{
+  name: 'Setting',
+  link: '/activity/address',
+}];
+
 
 export default function Navbar(prop) {
 
@@ -157,8 +137,8 @@ export default function Navbar(prop) {
                }}
              >
                {pages.map((page) => (
-                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                   <Typography textAlign="center">{page}</Typography>
+                 <MenuItem key={page.name} onClick={handleCloseNavMenu}>
+                   <Typography textAlign="center">{page.name}</Typography>
                  </MenuItem>
                ))}
              </Menu>
@@ -192,31 +172,19 @@ export default function Navbar(prop) {
            >
   
              {pages.map((page) => (
-               <Button key={page}>
-                 <Link
-                   to={page === 'Home' ? '/' : page}
+              <Link
+                   key={page.name}
+                   to={page.link}
                    style={{
                      my: 2,
                      display: 'block',
                      textDecoration: 'none',
                    }}
                  >
-                 <TypeJoy level="body1"> {page} </TypeJoy>
-                 </Link>
-               </Button>
+                 <TypeJoy level="body1" sx={{p:1,color:'neutral.plainColor'}}> {page.name} </TypeJoy>
+              </Link>
              ))}
              
-           </Sheet>
-           <Sheet sx={{ flexGrow: 1, justifyContent: 'center', pr: 5 }}>
-             <Search>
-               <SearchIconWrapper>
-                 <SearchIcon />
-               </SearchIconWrapper>
-               <StyledInputBase
-                 placeholder="Search…"
-                 inputProps={{ 'aria-label': 'search' }}
-               />
-             </Search>
            </Sheet>
            <Sheet sx={{ flexGrow: 0, display: { xs: 'none', md: 'flex' } }}>
               <ModeToggle></ModeToggle>
@@ -243,15 +211,15 @@ export default function Navbar(prop) {
                onClose={handleCloseUserMenu}
              >
                {settings.map((setting) => (
-                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                 <MenuItem key={setting.name} onClick={handleCloseUserMenu}>
                  <Link
-                   to={setting}
+                   to={setting.link}
                    style={{
                      color: 'inherit',
                      textDecoration: 'none',
                    }}
                  >
-                 <Typography textAlign="center">{setting}</Typography>
+                 <Typography textAlign="center">{setting.name}</Typography>
                  </Link>
   
                  </MenuItem>

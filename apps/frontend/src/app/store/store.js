@@ -1,5 +1,6 @@
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import productReducer from './productSlice';
+import categoryReducer from './categorySlice';
 import cartReducer from './cartSlice';
 import orderReducer from './orderSlice';
 import orderDetailReducer from './orderDetailSlice';
@@ -12,6 +13,7 @@ const middleware = [...getDefaultMiddleware()];
 const store = configureStore({
   reducer: {
     products: productReducer,
+    categories: categoryReducer,
     address: addressReducer,
     productDetail:productDetailSlice,
     cart: cartReducer,

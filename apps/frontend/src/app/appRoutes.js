@@ -18,7 +18,7 @@ export function AppRoutes() {
       <Route path="/shop" element={<ShopPage/>} />
       <Route path="/product/:productId" element={<ProductPage />} />
       <Route path="/order/:orderId" element={<OrderDetailPage />} />
-      <Route path="/activity" element={<ActivityPage />} />
+      <Route path="/activity/:tab" element={<ActivityPage />} />
       <Route path="/checkout" element={<CheckoutPage />} />
       <Route path="/profile" element={<ProfilePage />} />
     </Routes>
